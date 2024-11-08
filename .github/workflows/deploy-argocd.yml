@@ -1,0 +1,40 @@
+name: deploy-argocd
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events
+  push:
+    branches: [ "main", "argocd" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy-argocd:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          path: argocd  # Checkout to the argocd directory
+
+
+      - name: Apply ArgoCD Admin Password Secret
+        env:
+          ARGOCD_SECRET: ${{ secrets.ARGOCD_SECRET }}
+        run: |
+          echo "$ARGOCD_ADMIN_SECRET_YAML" | base64 --decode > argocd/argocd-admin-secret.yaml
+          kubectl apply -f argocd/argocd-admin-secret.yaml
+          rm argocd/argocd-admin-secret.yaml  # Clean up after applying
+
+      - name: Install or Upgrade ArgoCD with Helm
+        run: |
+          helm repo add argo https://argoproj.github.io/argo-helm
+          helm repo update
+          helm upgrade --install argocd argo/argo-cd -n "argocd" -f argocd/values.yaml --create-namespace
+  
+      - name: Wait for ArgoCD to be ready
+        run: |
+          kubectl wait --for=condition=available --timeout=600s deployment/argocd-server -n "argocd"
