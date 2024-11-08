@@ -31,8 +31,8 @@ jobs:
 
       - name: Install or Upgrade ArgoCD with Helm
         run: |
-          helm repo add argo https://argoproj.github.io/argo-helm
-          helm repo update
+          sudo helm repo add argo https://argoproj.github.io/argo-helm
+          sudo helm repo update
           sudo helm upgrade --install argocd argo/argo-cd -n "argocd" -f argocd/values.yaml --create-namespace --kubeconfig /etc/rancher/k3s/k3s.yaml
   
       - name: Wait for ArgoCD to be ready
