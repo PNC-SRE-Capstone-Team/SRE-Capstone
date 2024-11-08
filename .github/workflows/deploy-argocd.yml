@@ -17,8 +17,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        with:
-          path: argocd  # Checkout to the argocd directory
+        #with:
+          #path: argocd  # Checkout to the argocd directory
 
 
       - name: Apply ArgoCD Admin Password Secret
