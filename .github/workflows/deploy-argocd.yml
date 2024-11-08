@@ -26,7 +26,7 @@ jobs:
           ARGOCD_SECRET: ${{ secrets.ARGOCD_SECRET }}
         run: |
           echo "$ARGOCD_ADMIN_SECRET_YAML" | base64 --decode > argocd/argocd-admin-secret.yaml
-          kubectl apply -f argocd/argocd-admin-secret.yaml
+          sudo kubectl apply -f argocd/argocd-admin-secret.yaml
           rm argocd/argocd-admin-secret.yaml  # Clean up after applying
 
       - name: Install or Upgrade ArgoCD with Helm
@@ -37,4 +37,4 @@ jobs:
   
       - name: Wait for ArgoCD to be ready
         run: |
-          kubectl wait --for=condition=available --timeout=600s deployment/argocd-server -n "argocd"
+          sudo kubectl wait --for=condition=available --timeout=600s deployment/argocd-server -n "argocd"
