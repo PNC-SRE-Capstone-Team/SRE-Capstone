@@ -33,7 +33,7 @@ jobs:
         run: |
           helm repo add argo https://argoproj.github.io/argo-helm
           helm repo update
-          helm upgrade --install argocd argo/argo-cd -n "argocd" -f argocd/values.yaml --create-namespace
+          KUBECONFIG=/etc/rancher/k3s/k3s.yaml helm upgrade --install argocd argo/argo-cd -n "argocd" -f argocd/values.yaml --create-namespace
   
       - name: Wait for ArgoCD to be ready
         run: |
