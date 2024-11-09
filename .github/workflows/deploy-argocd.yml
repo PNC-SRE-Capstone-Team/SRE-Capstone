@@ -9,6 +9,8 @@ on:
       - argocd/**
   pull_request:
     branches: [ "main" ]
+    paths:
+      - argocd/**
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
