@@ -1,11 +1,15 @@
+global:
+  image:
+    tag: "v2.12.7"
+
 server:
   service:
     type: LoadBalancer          # Expose ArgoCD externally via LoadBalancer
     ports:
-    - name: http
-      port: 30443            # External LoadBalancer port for HTTP
-      targetPort: 8080       # Internal HTTP port for ArgoCD
-      protocol: TCP          
+      - name: http
+        port: 30443            # External LoadBalancer port for HTTP
+        targetPort: 8080       # Internal HTTP port for ArgoCD
+        protocol: TCP          
 
   # Configure URL for external HTTPS access, though internal communication uses HTTP
   config:
@@ -16,10 +20,10 @@ server:
   ingress:
     enabled: false
 
-  # additional config
-  applicationController:
-    replicas: 1
-  dex:
-    enabled: false
-  notifications:
-    enabled: true
+# additional config
+applicationController:
+  replicas: 1
+dex:
+  enabled: false
+notifications:
+  enabled: true
