@@ -9,14 +9,14 @@ sudo nano /etc/systemd/system/github-action-runner.service
 
 ```ini
 [Unit]
-Description=My Script Service that starts on internet connection
+Description=Github Action Runner Service
 After=network-online.target
 Wants=network-online.target
 
 [Service]
-Type=oneshot
-ExecStart=/home/op/action-runner/script.sh
-RemainAfterExit=yes
+ExecStart=/home/op/action-runner/run.sh
+Restart=always
+User=op
 
 [Install]
 WantedBy=multi-user.target
