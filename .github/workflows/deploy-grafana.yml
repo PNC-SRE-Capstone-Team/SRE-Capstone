@@ -36,5 +36,5 @@ jobs:
 
       - name: Deploy with ArgoCD CLI
         run: |
-          argocd login --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --server-name 'argo-cd-argocd-server' --insecure
+          argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --server-name 'argo-cd-argocd-server' --insecure
           argocd app sync grafana
