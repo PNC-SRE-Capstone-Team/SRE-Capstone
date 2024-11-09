@@ -2,11 +2,12 @@ argocd:
   server:
     service:
       type: LoadBalancer          # Expose ArgoCD externally via LoadBalancer
-      ports:
-        - name: http
-          port: 30443            # External LoadBalancer port for HTTP
-          targetPort: 8080       # Internal HTTP port for ArgoCD
-          protocol: TCP          
+      spec: 
+        ports:
+          - name: http
+            port: 30443            # External LoadBalancer port for HTTP
+            targetPort: 8080       # Internal HTTP port for ArgoCD
+            protocol: TCP          
 
     # Configure URL for external HTTPS access, though internal communication uses HTTP
     config:
