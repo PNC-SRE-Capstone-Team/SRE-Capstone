@@ -16,9 +16,11 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-        #with:
-          #path: argocd  # Checkout to the argocd directory
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            argocd
+          clean: false
 
 
       - name: Apply ArgoCD Admin Password Secret
