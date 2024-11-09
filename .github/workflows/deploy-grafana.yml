@@ -1,0 +1,36 @@
+name: deploy-grafana
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events
+  push:
+    branches: [ "main", "grafana" ]
+    paths:
+      - grafana/**
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - grafana/**
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy-grafana:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            grafana
+    
+      - name: Set Grafana Admin Password and Account
+        run: |
+          echo "adminUser: ${{ secrets.GRAFANA_ADMIN_ACCOUNT }}" >> values.yaml
+          echo "adminPassword: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}" >> values.yaml
+
+      - name: Deploy with ArgoCD CLI
+        run: |
+          argocd login --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --server-name argo-cd-argocd-server --insecure
+          argocd app sync grafana

@@ -1,0 +1,16 @@
+adminUser: "${{ secrets.GRAFANA_ADMIN_ACCOUNT}}"
+adminPassword: "${{ secrets.GRAFANA_ADMIN_PASSWORD }}"
+
+service:
+  type: LoadBalancer
+  port: 30444
+
+persistence:
+  enabled: true
+  size: 10Gi
+
+ingress:
+  enabled: false
+
+applicationController:
+  replicas: 1
