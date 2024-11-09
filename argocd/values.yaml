@@ -6,8 +6,12 @@ argo-cd:
       servicePortHttpsName: https
       servicePortHttps: 30443
 
-    config:
-      initialAdminPassword: ""  # Leave empty to respect the existing admin password in argocd-admin-secret
+    configs:
+      rbac:
+        policy.csv: |
+          p, role:admin, applications, *, */*, allow
+          g, admin, role:admin
+        policy.default: role:readonly
 
     # Disable Ingress in ArgoCD as we are using LoadBalancer
     ingress:
