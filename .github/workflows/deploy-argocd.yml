@@ -5,6 +5,8 @@ on:
   # Triggers the workflow on push or pull request events
   push:
     branches: [ "main", "argocd" ]
+    paths:
+      - argocd/**
   pull_request:
     branches: [ "main" ]
 
