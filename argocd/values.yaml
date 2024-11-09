@@ -7,19 +7,19 @@ server:
       targetPort: 8080       # Internal HTTP port for ArgoCD
       protocol: TCP          
 
-    # Configure URL for external HTTPS access, though internal communication uses HTTP
-    config:
-      url: https://argocd-server.argocd.svc.cluster.local  # Internal URL for ArgoCD over HTTP
-      initialAdminPassword: ""  # Leave empty to respect the existing admin password in argocd-admin-secret
+  # Configure URL for external HTTPS access, though internal communication uses HTTP
+  config:
+    url: https://argocd-server.argocd.svc.cluster.local  # Internal URL for ArgoCD over HTTP
+    initialAdminPassword: ""  # Leave empty to respect the existing admin password in argocd-admin-secret
 
-    # Disable Ingress in ArgoCD as we are using LoadBalancer
-    ingress:
-      enabled: false
+  # Disable Ingress in ArgoCD as we are using LoadBalancer
+  ingress:
+    enabled: false
 
-    # additional config
-    applicationController:
-      replicas: 1
-    dex:
-      enabled: false
-    notifications:
-      enabled: true
+  # additional config
+  applicationController:
+    replicas: 1
+  dex:
+    enabled: false
+  notifications:
+    enabled: true
