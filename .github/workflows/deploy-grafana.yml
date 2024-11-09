@@ -7,6 +7,7 @@ on:
     branches: [ "main", "grafana" ]
     paths:
       - grafana/**
+      - .github/workflows/deploy-grafana.yml
   pull_request:
     branches: [ "main" ]
     paths:
@@ -22,8 +23,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          sparse-checkout: |
-            grafana
           clean: false
     
       - name: Set Grafana Admin Password and Account

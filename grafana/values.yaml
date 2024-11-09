@@ -1,6 +1,3 @@
-adminUser: "${{ secrets.GRAFANA_ADMIN_ACCOUNT}}"
-adminPassword: "${{ secrets.GRAFANA_ADMIN_PASSWORD }}"
-
 service:
   type: LoadBalancer
   port: 30444
