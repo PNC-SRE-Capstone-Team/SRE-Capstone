@@ -10,6 +10,10 @@ argo-cd:
       rbac:
         policy.csv: |
           p, role:admin, applications, *, */*, allow
+          p, role:admin, clusters, get, *, allow
+          p, role:admin, repositories, *, *, allow
+          p, role:admin, logs, get, *, allow
+          p, role:admin, exec, create, */*, allow
           g, admin, role:admin
         policy.default: role:readonly
 
