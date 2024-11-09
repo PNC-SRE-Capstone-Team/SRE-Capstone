@@ -1,7 +1,7 @@
 # SRE-Capstone
 
 ## Github Actions
-The Github Actions runner is currently deployed on control-plane-1 of the Kubernetes cluster. After it's deployed and authenticated with the script provided by Github, the persistent service is created with the following commands:
+The Github Actions runner is currently deployed on control-plane-1 of the Kubernetes cluster. This allows the runner to directly perform kubectl, argocd, and helm commands without needing to open public access to the cluster or provision a jumpbox and enable ssh. After it's deployed and authenticated with the script provided by Github, the persistent service is created with the following commands:
 
 ```console
 sudo nano /etc/systemd/system/github-action-runner.service
