@@ -39,4 +39,4 @@ jobs:
   
       - name: Wait for ArgoCD to be ready
         run: |
-          sudo kubectl wait --for=condition=available --timeout=600s deployment/argocd-server -n "argocd"
+          sudo kubectl wait --for=condition=available --timeout=600s deployment/argo-cd-argocd-server -n "argocd"
