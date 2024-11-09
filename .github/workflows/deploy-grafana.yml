@@ -20,17 +20,22 @@ jobs:
   deploy-grafana:
     runs-on: self-hosted
     steps:
+      - name: Clean up
+        run: |
+          sudo rm -rf /home/op/actions-runner/_work/SRE-Capstone/SRE-Capstone
+          
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           clean: false
+          path: grafana
     
       - name: Set Grafana Admin Password and Account
         run: |
-          echo "adminUser: ${{ secrets.GRAFANA_ADMIN_ACCOUNT }}" >> values.yaml
-          echo "adminPassword: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}" >> values.yaml
+          echo "adminUser: ${{ secrets.GRAFANA_ADMIN_ACCOUNT }}" >> grafana/values.yaml
+          echo "adminPassword: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}" >> grafana/values.yaml
 
       - name: Deploy with ArgoCD CLI
         run: |
           argocd login --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --server-name argo-cd-argocd-server --insecure
-          argocd app sync grafana
+          argocd app sync grafana/grafana
