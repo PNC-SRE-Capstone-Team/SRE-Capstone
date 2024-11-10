@@ -14,6 +14,9 @@ spec:
       helm:
         valueFiles:
           - $values/grafana/values.yaml
+        values: |
+          adminUser: {{ secrets.GRAFANA_ADMIN_ACCOUNT }}
+          adminPassword: {{ secrets.GRAFANA_ADMIN_PASSWORD }}
 
     #values from git
     - repoURL: 'https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone'
