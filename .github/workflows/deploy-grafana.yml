@@ -1,0 +1,46 @@
+name: deploy-grafana
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events
+  push:
+    branches: [ "main", "grafana" ]
+    paths:
+      - grafana/**
+      - .github/workflows/deploy-grafana.yml
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - grafana/**
+      - .github/workflows/deploy-grafana.yml
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy-grafana:
+    runs-on: self-hosted
+    steps:
+      - name: Clean up
+        run: |
+          sudo rm -rf /home/op/actions-runner/_work/SRE-Capstone/SRE-Capstone/*
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          clean: false
+            
+      - name: Add helm repo
+        run: |  
+            sudo helm repo add grafana https://grafana.github.io/helm-charts 
+    
+      - name: Replace Grafana Admin Password and Account placeholders
+        run: |
+          sed -i "s/{{ secrets.GRAFANA_ADMIN_ACCOUNT }}/${{ secrets.GRAFANA_ADMIN_ACCOUNT }}/g" grafana/grafanaApplication.yaml
+          sed -i "s/{{ secrets.GRAFANA_ADMIN_PASSWORD }}/${{ secrets.GRAFANA_ADMIN_PASSWORD }}/g" grafana/grafanaApplication.yaml
+
+      - name: Deploy with ArgoCD CLI
+        run: |
+          argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
+          argocd app create -f grafana/grafanaApplication.yaml --upsert
+

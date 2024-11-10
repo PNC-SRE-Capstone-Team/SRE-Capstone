@@ -1,0 +1,11 @@
+service:
+  type: LoadBalancer
+  port: 30444
+
+persistence:
+  enabled: true
+  size: 10Gi
+
+ingress:
+  enabled: false
+
