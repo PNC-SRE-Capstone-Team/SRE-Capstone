@@ -1,13 +1,14 @@
-service:
-  type: LoadBalancer
-  port: 30444
+grafana:
+  service:
+    type: LoadBalancer
+    port: 30444
 
-persistence:
-  enabled: true
-  size: 10Gi
+  persistence:
+    enabled: true
+    size: 10Gi
 
-ingress:
-  enabled: false
+  ingress:
+    enabled: false
 
-applicationController:
-  replicas: 1
+  applicationController:
+    replicas: 1
