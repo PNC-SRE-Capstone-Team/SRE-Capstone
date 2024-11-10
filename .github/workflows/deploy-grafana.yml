@@ -33,9 +33,13 @@ jobs:
         run: |
           echo "  adminUser: ${{ secrets.GRAFANA_ADMIN_ACCOUNT }}" >> grafana/values.yaml
           echo "  adminPassword: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}" >> grafana/values.yaml
+            
+      - name: Add helm repo
+        run: |  
+            sudo helm repo add grafana https://grafana.github.io/helm-charts 
 
       - name: Deploy with ArgoCD CLI
         run: |
           
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
-          sudo argocd app sync grafana
+          argocd app create -f grafana/grafanaApplication.yaml --upsert

@@ -6,13 +6,19 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    repoURL: https://grafana.github.io/helm-charts
-    targetRevision: 8.5.12
-    chart: grafana
-    helm:
-      valueFiles:
-        - $GITHUB_WORKSPACE/grafana/values.yaml
+  sources:
+    #chart from helm
+    - chart: grafana
+      repoURL: https://grafana.github.io/helm-charts
+      targetRevision: 8.5.12
+      helm:
+        valueFiles:
+          - $values/grafana/values.yaml
+
+    #values from git
+    - repoURL: 'https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone'
+      targetRevision: grafana
+      ref: values
   destination:
     server: https://kubernetes.default.svc
     namespace: monitoring

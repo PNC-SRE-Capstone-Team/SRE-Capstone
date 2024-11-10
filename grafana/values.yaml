@@ -1,6 +1,6 @@
 service:
   type: LoadBalancer
-  nodePort: 30444
+  port: 30444
 
 persistence:
   enabled: true
