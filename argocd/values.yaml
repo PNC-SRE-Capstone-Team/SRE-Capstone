@@ -5,17 +5,22 @@ argo-cd:
 
       servicePortHttpsName: https
       servicePortHttps: 30443
-
-    configs:
-      rbac:
-        policy.csv: |
-          p, role:admin, applications, *, */*, allow
-          g, admin, role:admin
-        policy.default: role:readonly
-
+      
     # Disable Ingress in ArgoCD as we are using LoadBalancer
     ingress:
       enabled: false
+
+  configs:
+    rbac:
+      policy.csv: |
+        p, role:admin, applications, *, */*, allow
+        p, role:admin, clusters, get, *, allow
+        p, role:admin, repositories, *, *, allow
+        p, role:admin, logs, get, *, allow
+        p, role:admin, exec, create, */*, allow
+        g, admin, role:admin
+      policy.default: role:readonly
+
 
   # additional config
   applicationController:
