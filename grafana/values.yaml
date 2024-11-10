@@ -10,5 +10,3 @@ grafana:
   ingress:
     enabled: false
 
-  applicationController:
-    replicas: 1

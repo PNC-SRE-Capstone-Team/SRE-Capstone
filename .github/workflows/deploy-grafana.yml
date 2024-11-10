@@ -31,10 +31,11 @@ jobs:
     
       - name: Set Grafana Admin Password and Account
         run: |
-          echo "adminUser: ${{ secrets.GRAFANA_ADMIN_ACCOUNT }}" >> grafana/values.yaml
-          echo "adminPassword: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}" >> grafana/values.yaml
+          echo "  adminUser: ${{ secrets.GRAFANA_ADMIN_ACCOUNT }}" >> grafana/values.yaml
+          echo "  adminPassword: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}" >> grafana/values.yaml
 
       - name: Deploy with ArgoCD CLI
         run: |
+          
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
           sudo argocd app sync grafana
