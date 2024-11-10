@@ -31,8 +31,8 @@ jobs:
     
       - name: Set Grafana Admin Password and Account
         run: |
-          echo "adminUser: ${{ secrets.GRAFANA_ADMIN_ACCOUNT }}" >> values.yaml
-          echo "adminPassword: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}" >> values.yaml
+          echo "adminUser: ${{ secrets.GRAFANA_ADMIN_ACCOUNT }}" >> grafana/values.yaml
+          echo "adminPassword: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}" >> grafana/values.yaml
 
       - name: Deploy with ArgoCD CLI
         run: |
