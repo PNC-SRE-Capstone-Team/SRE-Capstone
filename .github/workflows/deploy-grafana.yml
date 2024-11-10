@@ -32,14 +32,14 @@ jobs:
       - name: Add helm repo
         run: |  
             sudo helm repo add grafana https://grafana.github.io/helm-charts 
+    
+      - name: Replace Grafana Admin Password and Account placeholders
+        run: |
+          sed -i "s/{{ secrets.GRAFANA_ADMIN_ACCOUNT }}/${{ secrets.GRAFANA_ADMIN_ACCOUNT }}/g" grafana/grafanaApplication.yaml
+          sed -i "s/{{ secrets.GRAFANA_ADMIN_PASSWORD }}/${{ secrets.GRAFANA_ADMIN_PASSWORD }}/g" grafana/grafanaApplication.yaml
 
       - name: Deploy with ArgoCD CLI
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
           argocd app create -f grafana/grafanaApplication.yaml --upsert
 
-      - name: Set Grafana Admin Password and Account
-        run: |
-          echo "adminUser: ${{ secrets.GRAFANA_ADMIN_ACCOUNT }}" >> grafana/values.yaml
-          echo "adminPassword: ${{ secrets.GRAFANA_ADMIN_PASSWORD }}" >> grafana/values.yaml
-          sudo helm upgrade grafana grafana/grafana -f grafana/values.yaml -n monitoring --kubeconfig /etc/rancher/k3s/k3s.yaml
