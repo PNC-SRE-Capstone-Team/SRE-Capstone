@@ -1,0 +1,9 @@
+controller:
+  service:
+    type: LoadBalancer
+    externalTrafficPolicy: Cluster
+  ingressClassResource:
+    enabled: true
+    default: true
+rbac:
+  create: true
