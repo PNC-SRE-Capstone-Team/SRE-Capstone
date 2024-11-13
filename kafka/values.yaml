@@ -16,3 +16,7 @@ serviceAccount:
   create: true
 rbac:
   create: true
+controller:
+  automountServiceAccountToken: true
+broker:
+  automountServiceAccountToken: true
