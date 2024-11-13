@@ -1,0 +1,37 @@
+# mongodb-app.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: mongodb
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    #Bitnami helm chart
+    -  repoURL: oci://registry-1.docker.io/bitnamicharts/mongodb
+    targetRevision: 16.2.1
+    chart: mongodb
+    helm:
+        valueFiles:
+          - $values/mongodb/values.yaml
+    
+    #values from git
+    - repoURL: 'https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone'
+      targetRevision: chad
+      ref: values
+
+destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 2
+    backoff:
+      duration: 5s
+      maxDuration: 3m0s
+      factor: 2

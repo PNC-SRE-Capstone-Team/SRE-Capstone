@@ -38,4 +38,4 @@ jobs:
       - name: Deploy with ArgoCD CLI
         run: |
               argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
-              argocd app create -f mongodb/mongoApplication.yaml --upsert
+              argocd app create -f mongodb/mongoApplication.yaml --upsert --helm-set auth.username=${{ secrets.MONGO_USERNAME }} --helm-set auth.password=${{ secrets.MONGO_PASSWORD }} --helm-set auth.rootPassword=${{ secrets.MONGO_PASSWORD }}
