@@ -1,0 +1,26 @@
+[
+  {
+    "hostname": "k8s-control-plane-1",
+    "ip": "10.100.200.28"
+  },
+  {
+    "hostname": "k8s-control-plane-3",
+    "ip": "10.100.200.29"
+  },
+  {
+    "hostname": "k8s-control-plane-2",
+    "ip": "10.100.200.23"
+  },
+  {
+    "hostname": "k8s-worker-1",
+    "ip": "10.100.200.32"
+  },
+  {
+    "hostname": "k8s-worker-3",
+    "ip": "10.100.200.33"
+  },
+  {
+    "hostname": "k8s-worker-2",
+    "ip": "10.100.200.35"
+  }
+]

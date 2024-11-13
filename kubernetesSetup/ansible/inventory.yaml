@@ -1,0 +1,28 @@
+all:
+  children:
+    control_planes:
+      hosts:
+        k8s-control-plane-1:
+          ansible_host: 10.100.200.28
+          ansible_ssh_private_key_file: ~/.ssh/ansible
+        k8s-control-plane-2:
+          ansible_host: 10.100.200.23
+          ansible_ssh_private_key_file: ~/.ssh/ansible
+        k8s-control-plane-3:
+          ansible_host: 10.100.200.29
+          ansible_ssh_private_key_file: ~/.ssh/ansible
+      vars:
+        ansible_user: op
+    workers:
+      hosts:
+        k8s-worker-1:
+          ansible_host: 10.100.200.32
+          ansible_ssh_private_key_file: ~/.ssh/ansible
+        k8s-worker-2:
+          ansible_host: 10.100.200.35
+          ansible_ssh_private_key_file: ~/.ssh/ansible
+        k8s-worker-3:
+          ansible_host: 10.100.200.33
+          ansible_ssh_private_key_file: ~/.ssh/ansible
+      vars:
+        ansible_user: op

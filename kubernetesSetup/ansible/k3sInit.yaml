@@ -1,0 +1,69 @@
+---
+- name: Setup Kubernetes cluster on Proxmox VMs
+  hosts: localhost
+  gather_facts: no
+  vars:
+    azure_keyvault_name: "bluelockKeyVault"
+    ssh_secret_name: "k8sOpPass"
+    ansible_python_interpreter: ./ansibleEnv/bin/python3.10
+
+  tasks:
+    - name: Retrieve the SSH password from Azure Key Vault
+      azure.azcollection.azure_rm_keyvaultsecret_info:
+        vault_uri: "https://{{ azure_keyvault_name }}.vault.azure.net"
+        name: "{{ ssh_secret_name }}"
+      register: azure_secret
+
+- name: Ensure VM hostnames match inventory names
+  hosts: control_planes, workers  # Run on both control-plane and worker groups
+  become: yes
+  gather_facts: false
+  tasks:
+    - name: Get current hostname
+      command: hostname
+      register: current_hostname
+
+    - name: Set the hostname if it does not match inventory name
+      hostname:
+        name: "{{ inventory_hostname }}"
+      when: current_hostname.stdout != inventory_hostname
+
+    - name: Update /etc/hosts to reflect the new hostname
+      lineinfile:
+        path: /etc/hosts
+        regexp: '^127\.0\.1\.1\s+.*$'
+        line: "127.0.1.1 {{ inventory_hostname }}"
+        state: present
+      when: current_hostname.stdout != inventory_hostname
+
+    - name: Reboot the node to apply the new hostname (if necessary)
+      reboot:
+        msg: "Rebooting after hostname change"
+        pre_reboot_delay: 5
+        post_reboot_delay: 30
+        reboot_timeout: 300
+      when: current_hostname.stdout != inventory_hostname
+
+
+- name: Setup prerequisites
+  hosts: control_planes, workers
+  become: yes
+  tasks:
+    - name: Install prerequisites
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - gnupg
+          - socat
+          - containerd
+          - docker.io
+        update_cache: yes
+        state: latest
+    
+    - name: Adding OP to NOPASSWD users
+      shell: |
+        sudo echo 'OP ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+
+  
