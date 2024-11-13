@@ -1,0 +1,5 @@
+externalAccess:
+  enabled: true
+  broker:
+    service:
+      type: LoadBalancer
