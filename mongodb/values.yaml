@@ -5,10 +5,7 @@ service:
   type: LoadBalancer
   port: 30445
 
-# Authentication settings
-auth:
-  enabled: true
-  databases: ["default"]
+
 
 # Persistent storage settings
 persistence:
