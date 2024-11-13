@@ -33,18 +33,9 @@ jobs:
 
       - name: Add helm repo with bitnami chart
         run: |  
-<<<<<<< HEAD
-            sudo helm repo add bitnami https://charts.bitnami.com/bitnami
-
-      - name: Deploy with ArgoCD CLI
-        run: |
-              argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
-              argocd app create -f mariadb/mariadbApplication.yaml --upsert --helm-set auth.username=${{ secrets.MARIADB_USERNAME }} --helm-set auth.password=${{ secrets.MARIADB_PASSWORD }}
-=======
           sudo helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Deploy with ArgoCD CLI
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
           argocd app create -f mariadb/mariadbApplication.yaml --upsert --helm-set auth.username=${{ secrets.MARIADB_USERNAME }} --helm-set auth.password=${{ secrets.MARIADB_PASSWORD }}
->>>>>>> 92b5af5 (refactor)
