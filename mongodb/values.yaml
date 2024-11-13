@@ -8,7 +8,7 @@ service:
 # Authentication settings
 auth:
   enabled: true
-  database: default
+  databases: ["default"]
 
 # Persistent storage settings
 persistence:

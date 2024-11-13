@@ -1,3 +1,4 @@
+#grafana/values.yaml
 service:
   type: LoadBalancer
   port: 30444
