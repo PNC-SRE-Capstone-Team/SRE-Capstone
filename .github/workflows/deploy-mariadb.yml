@@ -19,7 +19,7 @@ on:
 
 
 jobs:
-  deploy-mongdb:
+  deploy-mariadb:
     runs-on: self-hosted
     steps:
       - name: Clean up
