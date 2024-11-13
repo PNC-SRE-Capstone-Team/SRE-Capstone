@@ -5,8 +5,6 @@ service:
   type: LoadBalancer
   port: 30445
 
-
-
 # Persistent storage settings
 persistence:
   enabled: true
