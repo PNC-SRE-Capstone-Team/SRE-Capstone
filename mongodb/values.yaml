@@ -3,7 +3,8 @@ architecture: standalone
 # MongoDB service configuration
 service:
   type: LoadBalancer
-  port: 30445
+  ports:
+    mongodb: 30445
 
 # Persistent storage settings
 persistence:
