@@ -10,3 +10,5 @@ primary:
 
 metrics:
   enabled: true
+
+auth.database: maria_appDB
