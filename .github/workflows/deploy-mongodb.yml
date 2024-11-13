@@ -4,7 +4,7 @@ name: deploy-mongodb
 on:
   # Triggers the workflow on push or pull request events
   push:
-    branches: [ "main", "chad" ]
+    branches: [ "main" ]
     paths:
       - mongodb/**
       - .github/workflows/deploy-mongodb.yml

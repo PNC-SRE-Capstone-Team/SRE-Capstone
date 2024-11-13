@@ -15,7 +15,7 @@ spec:
 
     # External values from Git
     - repoURL: 'https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone'
-      targetRevision: chad
+      targetRevision: main
       ref: values
 
   destination:

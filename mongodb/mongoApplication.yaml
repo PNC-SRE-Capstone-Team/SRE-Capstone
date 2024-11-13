@@ -17,12 +17,12 @@ spec:
 
     #values from git
     - repoURL: 'https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone'
-      targetRevision: chad
+      targetRevision: main
       ref: values
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: monitoring
+    namespace: database
     
   syncPolicy:
     automated:
