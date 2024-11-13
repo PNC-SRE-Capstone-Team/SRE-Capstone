@@ -34,6 +34,10 @@ jobs:
       - name: Add helm repo with bitnami chart
         run: |  
           sudo helm repo add bitnami https://charts.bitnami.com/bitnami
+      
+      - name: Create secret for password update
+        run: |
+          sudo kubectl create secret generic SECRET_NAME --from-literal=password=PASSWORD --from-literal=root-password=ROOT_PASSWORD --dry-run -o yaml | sudo kubectl apply -f -
 
       - name: Deploy with ArgoCD CLI
         run: |
