@@ -1,0 +1,20 @@
+architecture: standalone
+
+# mariaDB service configuration
+service:
+  type: LoadBalancer
+  port: 30446
+
+
+
+# Persistent storage settings
+persistence:
+  enabled: true
+  size: 8Gi
+
+# Disable replica set
+replicaSet:
+  enabled: false
+
+metrics:
+  enabled: true
