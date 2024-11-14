@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 import mysql.connector
 from environs import Env
+import schedule
+import time
 
 #init env
 env = Env()
@@ -40,18 +42,11 @@ cursor.execute("SHOW DATABASES")
 databases = cursor.fetchall()
 print(databases)
 
+# while loop that will only trigger every hour
+schedule.every().hour.do()
+while True:
+    schedule.run_pending()
+    time.sleep(1)
+
 sql.close()
 
-
-
-# TODO build summaries for all entries and just fraud
-
-# total of each card type JSON
-# total of each entry mode JSON
-# average amount float
-# total of each transaction type JSON
-# total country of transaction JSON
-# total shipping address countries  JSON
-# total Country of residence JSON
-# total of each bank JSON
-# fraud count
