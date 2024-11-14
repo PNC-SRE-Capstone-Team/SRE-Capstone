@@ -1,13 +1,11 @@
 externalAccess:
   enabled: true
   broker:
-    replicaCount: 2
     service:
       type: LoadBalancer
       ports:
         external: 9094
   controller:
-    replicaCount: 2
     service:
       type: LoadBalancer
       containerPorts:
@@ -20,5 +18,6 @@ rbac:
   create: true
 controller:
   automountServiceAccountToken: true
+  replicaCount: 2
 broker:
   automountServiceAccountToken: true
