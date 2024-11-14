@@ -7,40 +7,47 @@ def build_summaries(docs):
 # total country of transaction JSON
 # total shipping address countries  JSON
 # total Country of residence JSON
-# total of each bank JSON
+# total of each Bank JSON
 # fraud count
 
-    all_entry = {'card_type': {},
-                 'entry_mode': {},
-                 'average_amount': [],
-                 'transaction_type': {},
-                 'transaction_country': {},
-                 'shipping_address_country': {},
-                 'residence_country': {},
-                 'bank': {},
-                 'fraud_count': 0}
+    all_entry = {'Type of Card': {},
+                 'Entry Mode': {},
+                 'Average Amount': [],
+                 'Type of Transaction': {},
+                 'Merchant Group': {},
+                 'Country of Transaction': {},
+                 'Shipping Address': {},
+                 'Country of Residence': {},
+                 'Bank': {},
+                 'Fraud': 0}
     
-    fraud_entry = {'card_type': {},
-                 'entry_mode': {},
-                 'average_amount': [],
-                 'transaction_type': {},
-                 'transaction_country': {},
-                 'shipping_address_country': {},
-                 'residence_country': {},
-                 'bank': {}}
+    fraud_entry = {'Type of Card': {},
+                 'Entry Mode': {},
+                 'Average Amount': [],
+                 'Type of Transaction': {},
+                 'Merchant Group': {},
+                 'Country of Transaction': {},
+                 'Shipping Address': {},
+                 'Country of Residence': {},
+                 'Bank': {}}
     
     for doc in docs:
 
-        if doc["fraud"] == 1:
-             count_data(fraud_entry, doc, True)
+        if doc["Fraud"] == '1':
+             count_data(all_entry, fraud_entry, doc, True)
         else:
-             count_data(all_entry, doc, False)
+             count_data(all_entry, fraud_entry, doc, False)
+
+    #get average amount
+
+    all_entry['Average Amount'] = get_average_amount(all_entry['Average Amount'])
+    fraud_entry['Average Amount'] = get_average_amount(fraud_entry['Average Amount'])
 
     return [all_entry, fraud_entry]
 
 
 def count_data(all_entry_dict, fraud_entry_dict, data_dict, is_fraud):
-    categories = ["card_type", "entry_mode", "transaction_type", "transaction_country", "shippint_address_country", "residence_country", "bank"]
+    categories = ["Type of Card", "Entry Mode", "Type of Transaction", "Merchant Group", "Country of Transaction", "Shipping Address", "Country of Residence", "Bank"]
 
     for category in categories:
         if data_dict[category] in all_entry_dict[category]:
@@ -54,9 +61,16 @@ def count_data(all_entry_dict, fraud_entry_dict, data_dict, is_fraud):
             else:
                 fraud_entry_dict[category].update({data_dict[category]: 1})
 
-    all_entry_dict["average_amount"].append(data_dict["transaction_amount"])
+    all_entry_dict["Average Amount"].append(data_dict["Amount"])
 
     if is_fraud:
-        fraud_entry_dict["average_amount"].append(data_dict["transaction_amount"])
-        all_entry_dict["fraud_count"] += 1
+        fraud_entry_dict["Average Amount"].append(data_dict["Amount"])
+        all_entry_dict["Fraud"] += 1
+
+def get_average_amount(amounts):
+     nums = []
+     for amount in amounts:
+          nums.append(int(amount[1:]))
+
+     return '£' + str(round(sum(nums) / len(nums), 2))
 
