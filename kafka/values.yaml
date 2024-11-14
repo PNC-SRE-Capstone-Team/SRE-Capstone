@@ -18,7 +18,7 @@ rbac:
   create: true
 controller:
   automountServiceAccountToken: true
-  replicaCount: 2
+  replicaCount: 1
 broker:
   automountServiceAccountToken: true
   pdb:
