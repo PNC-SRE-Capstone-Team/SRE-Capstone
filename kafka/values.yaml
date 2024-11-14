@@ -1,11 +1,13 @@
 externalAccess:
   enabled: true
   broker:
+    replicaCount: 2
     service:
       type: LoadBalancer
       ports:
         external: 9094
   controller:
+    replicaCount: 2
     service:
       type: LoadBalancer
       containerPorts:
