@@ -33,6 +33,10 @@ jobs:
       - name: Add helm repo with bitnami chart
         run: |
           sudo helm repo add bitnami https://charts.bitnami.com/bitnami
+      
+      - name: Clear any existing PVCs
+        run: |
+          sudo kubectl delete pvc -n kafka --all
 
       - name: Deploy with ArgoCD CLI
         run: |
