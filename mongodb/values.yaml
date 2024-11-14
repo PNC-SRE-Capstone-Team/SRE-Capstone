@@ -1,0 +1,19 @@
+architecture: standalone
+
+# MongoDB service configuration
+service:
+  type: LoadBalancer
+  ports:
+    mongodb: 30445
+
+# Persistent storage settings
+persistence:
+  enabled: true
+  size: 8Gi
+
+# Disable replica set
+replicaSet:
+  enabled: false
+
+metrics:
+  enabled: true

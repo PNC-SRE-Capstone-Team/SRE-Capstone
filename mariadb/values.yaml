@@ -1,0 +1,14 @@
+# Persistent storage and service configuration settings
+primary:  
+  persistence:
+    enabled: true
+    size: 8Gi
+  service:
+    type: LoadBalancer
+    ports: 
+      mysql: 30446
+
+metrics:
+  enabled: true
+
+auth.database: maria_appDB
