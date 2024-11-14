@@ -15,11 +15,34 @@ mysql_port = env.str("MYSQL_PORT")
 mysql_user = env.str("MYSQL_USER")
 mysql_pw = env.str("MYSQL_PW")
 
-# TODO GET COLLECTIONS
+# Mongo DB Connection
 mongo = MongoClient(mongo_uri)
 mongo_db = mongo["local"]
 collections = mongo_db.list_collection_names()
 print(collections)
+
+# MySQL Connection
+
+sql = mysql.connector.connect(
+    host=cluster,
+    user=mysql_user,
+    password=mysql_pw,
+    port=mysql_port,
+    collation="utf8mb4_general_ci"
+)
+
+if sql.is_connected():
+    print("Connected to MySQL")
+
+cursor = sql.cursor()
+
+cursor.execute("SHOW DATABASES")
+databases = cursor.fetchall()
+print(databases)
+
+sql.close()
+
+
 
 # TODO build summaries for all entries and just fraud
 
