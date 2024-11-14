@@ -21,3 +21,7 @@ controller:
   replicaCount: 2
 broker:
   automountServiceAccountToken: true
+
+auth:
+  interBrokerProtocol: plaintext
+  clientProtocol: plaintext
