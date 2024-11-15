@@ -33,8 +33,21 @@ jobs:
       - name: Add helm repo
         run: |  
             sudo helm repo add jetstack https://charts.jetstack.io --force-update
+    
+      - name: Create Kubernetes secret for Cloudflare API token
+        env:
+            CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+            sudo kubectl create secret generic cloudflare-api-token \
+            --namespace cert-manager \
+            --from-literal=api-token="$CLOUDFLARE_API_TOKEN" \
+            --dry-run=client -o yaml | kubectl apply -f -
 
-      - name: Deploy with ArgoCD CLI
+      - name: Deploy both main application and custom issuer with ArgoCD CLI
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
           argocd app create -f cert-manager/cert-managerApplication.yaml --upsert
+          argocd app wait cert-manager --timeout 120
+          argocd app create -f cert-manager/cert-manager-issuerApplication.yaml --upsert
+          argocd app wait cert-manager-issuer --timeout 120
+

@@ -2,3 +2,8 @@
 
 #Automatically delete secrets of removed certificates
 enableCertificateOwnerRef: true
+
+#Enable custom resources (issuers of DNS challenges), but remove them when the app is removed
+crds:
+  enabled: true
+  keep: false
