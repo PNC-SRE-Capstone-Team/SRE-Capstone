@@ -2,9 +2,10 @@ argo-cd:
   server:
     service:
       type: LoadBalancer
-
       servicePortHttpsName: https
       servicePortHttps: 30443
+      servicePortHttpName: https
+      servicePortHttp: 30442
       
     # Disable Ingress in ArgoCD as we are using LoadBalancer
     ingress:

@@ -1,0 +1,37 @@
+# cert-manager/cert-managerApplication.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    #chart from helm
+    - chart: cert-manager
+      repoURL: https://charts.jetstack.io
+      targetRevision: v1.16.1
+      helm:
+        valueFiles:
+          - $values/cert-manager/values.yaml
+
+    #values from git
+    - repoURL: 'https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone'
+      targetRevision: nginx
+      ref: values
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 2
+    backoff:
+      duration: 5s
+      maxDuration: 3m0s
+      factor: 2

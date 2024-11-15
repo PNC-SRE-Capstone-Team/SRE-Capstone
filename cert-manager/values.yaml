@@ -1,0 +1,4 @@
+#cert-manager/values.yaml
+
+#Automatically delete secrets of removed certificates
+enableCertificateOwnerRef: true
