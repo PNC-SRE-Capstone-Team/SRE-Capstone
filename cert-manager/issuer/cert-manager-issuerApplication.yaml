@@ -10,7 +10,7 @@ spec:
     #values from git
     - repoURL: 'https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone'
       targetRevision: nginx
-      path: cert-manager/manifest
+      path: cert-manager/issuer/manifest
   
   destination:
     server: https://kubernetes.default.svc

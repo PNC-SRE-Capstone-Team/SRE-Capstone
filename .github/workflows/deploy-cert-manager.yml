@@ -48,9 +48,9 @@ jobs:
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
           argocd app create -f cert-manager/cert-managerApplication.yaml --upsert
           argocd app wait cert-manager --timeout 120
-          argocd app create -f cert-manager/cert-manager-issuerApplication.yaml --upsert
+          argocd app create -f cert-manager/issuer/cert-manager-issuerApplication.yaml --upsert
           argocd app wait cert-manager-issuer --timeout 120
 
       - name: Apply wildcard certificate
         run: |
-          sudo kubectl apply -f $GITHUB_WORKSPACE/cert-manager/manifest/certificate.yaml
+          sudo kubectl apply -f $GITHUB_WORKSPACE/cert-manager/issuer/manifest/certificate.yaml
