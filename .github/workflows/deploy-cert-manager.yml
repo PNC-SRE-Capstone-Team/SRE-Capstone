@@ -41,7 +41,7 @@ jobs:
             sudo kubectl create secret generic cloudflare-api-token \
             --namespace cert-manager \
             --from-literal=api-token="$CLOUDFLARE_API_TOKEN" \
-            --dry-run=client -o yaml | kubectl apply -f -
+            --dry-run=client -o yaml | sudo kubectl apply -f -
 
       - name: Deploy both main application and custom issuer with ArgoCD CLI
         run: |
