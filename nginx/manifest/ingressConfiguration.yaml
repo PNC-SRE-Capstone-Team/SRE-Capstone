@@ -24,7 +24,7 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: argo-cd-argocd-server
+                name: argo-cd-argocd-server.argo-cd.svc.cluster.local
                 port:
                   number: 30443
     - host: grafana.damdiel.com
