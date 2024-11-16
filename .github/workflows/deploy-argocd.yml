@@ -4,7 +4,7 @@ name: deploy-argocd
 on:
   # Triggers the workflow on push or pull request events
   push:
-    branches: [ "main", "argocd" ]
+    branches: [ "main", "argocd", "nginx" ]
     paths:
       - argocd/**
   pull_request:
@@ -22,6 +22,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          ref: 'nginx'
           clean: false
 
 

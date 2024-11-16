@@ -1,0 +1,35 @@
+name: deploy-ingress-nginx
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events
+  push:
+    branches: [ "main", "argocd", "nginx" ]
+    paths:
+      - nginx/**
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - nginx/**
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy-argocd:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: 'nginx'
+          clean: false
+
+      - name: Add helm repo
+        run: |  
+          sudo helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+
+      - name: Deploy with ArgoCD CLI
+        run: |
+          argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
+          argocd app create -f nginx/ingress-nginxApplication.yaml --upsert

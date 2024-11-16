@@ -2,7 +2,7 @@ architecture: standalone
 
 # MongoDB service configuration
 service:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
     mongodb: 30445
 
