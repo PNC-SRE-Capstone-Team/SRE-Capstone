@@ -15,7 +15,7 @@ spec:
   tls:
     - hosts:
         - "*.damdiel.com"  # Wildcard domain for all services
-      secretName: wildcard-cert-secret
+      secretName: wildcard-cert-tls
   rules:
     - host: argocd.damdiel.com
       http:
