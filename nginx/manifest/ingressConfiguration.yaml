@@ -27,7 +27,7 @@ spec:
               service:
                 name: argo-cd-argocd-server
                 port:
-                  number: 30443
+                  number: 443
     - host: grafana.damdiel.com
       http:
         paths:
@@ -37,7 +37,7 @@ spec:
               service:
                 name: grafana
                 port:
-                  number: 30444
+                  number: 443
     - host: kafka.damdiel.com
       http:
         paths:
@@ -47,7 +47,7 @@ spec:
               service:
                 name: kafka-controller-0-external
                 port:
-                  number: 9094
+                  number: 443
     - host: mariadb.damdiel.com
       http:
         paths:
@@ -57,7 +57,7 @@ spec:
               service:
                 name: mariadb
                 port:
-                  number: 30446
+                  number: 443
     - host: mongodb.damdiel.com
       http:
         paths:
@@ -67,7 +67,7 @@ spec:
               service:
                 name: mongodb
                 port:
-                  number: 30445
+                  number: 443
     - host: mongodb-metrics.damdiel.com
       http:
         paths:
@@ -77,7 +77,7 @@ spec:
               service:
                 name: mongodb-metrics
                 port:
-                  number: 9216
+                  number: 443
     - host: prometheus.damdiel.com
       http:
         paths:
@@ -87,4 +87,4 @@ spec:
               service:
                 name: prometheus
                 port:
-                  number: 9104
+                  number: 443
