@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy-argocd:
+  deploy-ingress-nginx:
     runs-on: self-hosted
     steps:
       - name: Checkout repository
