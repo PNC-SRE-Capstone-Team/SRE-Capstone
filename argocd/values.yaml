@@ -1,4 +1,9 @@
 argo-cd: 
+  global:
+    domain: argo.damdiel.com
+  certificate: 
+    enabled: true
+
   server:
     service:
       type: ClusterIP
@@ -7,11 +12,19 @@ argo-cd:
       servicePortHttpName: http
       servicePortHttp: 30442
       
-    # Disable Ingress in ArgoCD as we are using LoadBalancer
     ingress:
-      enabled: false
+      enabled: true
+      ingressClassName: nginx
+      annotations:
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      extraTls:
+        - hosts:
+          - argocd.damdiel.com
 
   configs:
+    params:
+      server.insecure: true
     rbac:
       policy.csv: |
         p, role:admin, applications, *, */*, allow
