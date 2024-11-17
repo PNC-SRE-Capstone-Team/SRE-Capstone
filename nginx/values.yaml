@@ -15,5 +15,8 @@ controller:
   prometheusRule:
     enabled: true
 
+extraArgs:
+  default-ssl-certificate: "ingress-nginx/wildcard-cert-tls"
+
 rbac:
   create: true
