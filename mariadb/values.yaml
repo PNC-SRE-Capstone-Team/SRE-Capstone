@@ -4,7 +4,7 @@ primary:
     enabled: true
     size: 8Gi
   service:
-    type: ClusterIP
+    type: LoadBalancer
     ports: 
       mysql: 30446
 
