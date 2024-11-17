@@ -5,7 +5,7 @@ tls:
 
 # MongoDB service configuration
 service:
-  type: loadBalancer
+  type: LoadBalancer
   ports:
     mongodb: 27017
 
