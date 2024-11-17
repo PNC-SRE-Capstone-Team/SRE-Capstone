@@ -14,7 +14,7 @@ metadata:
 spec:
   tls:
     - hosts:
-        - "argo.damdiel.com"  # Wildcard domain for all services
+        - "argo.damdiel.com" 
       secretName: argocd-server-tls
   rules:
     - host: argo.damdiel.com
