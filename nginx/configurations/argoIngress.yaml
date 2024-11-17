@@ -15,7 +15,7 @@ spec:
         - "*.damdiel.com"  # Wildcard domain for all services
       secretName: wildcard-cert-tls
   rules:
-    - host: argocd.damdiel.com
+    - host: argo.damdiel.com
       http:
         paths:
           - path: /
