@@ -15,7 +15,7 @@ spec:
 
     # External values from Git
     - repoURL: 'https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone'
-      targetRevision: main
+      targetRevision: nginx
       ref: values
 
   destination:

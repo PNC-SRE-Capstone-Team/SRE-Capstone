@@ -1,0 +1,16 @@
+#nginx/values.yaml
+controller:
+  # sole loadbalancer service for cluster, all others will be accessed via cluster IP through ingress-nginx
+  service:
+    type: LoadBalancer
+    externalTrafficPolicy: Local
+    externalIPs: [10.100.200.23]
+
+  #Metrics for prometheus
+  metrics:
+    enabled: true
+  prometheusRule:
+    enabled: true
+
+rbac:
+  create: true

@@ -20,7 +20,7 @@ spec:
 
     #values from git
     - repoURL: 'https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone'
-      targetRevision: main
+      targetRevision: nginx
       ref: values
   destination:
     server: https://kubernetes.default.svc

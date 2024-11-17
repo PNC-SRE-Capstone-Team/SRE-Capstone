@@ -1,9 +1,9 @@
-#nginx/ingressConfiguration.yaml
+#nginx/databaseIngress.yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: wildcard-ingress
-  namespace: ingress-nginx
+  name: database-ingress
+  namespace: database
   annotations:
     kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
@@ -15,37 +15,6 @@ spec:
     - hosts:
         - "*.damdiel.com"  # Wildcard domain for all services
       secretName: wildcard-cert-tls
-  rules:
-    - host: argocd.damdiel.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: argo-cd-argocd-server.argo-cd.svc.cluster.local
-                port:
-                  number: 30443
-    - host: grafana.damdiel.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: grafana
-                port:
-                  number: 30444
-    - host: kafka.damdiel.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: kafka-controller-0-external
-                port:
-                  number: 9094
     - host: mariadb.damdiel.com
       http:
         paths:
@@ -76,13 +45,4 @@ spec:
                 name: mongodb-metrics
                 port:
                   number: 9216
-    - host: prometheus.damdiel.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: prometheus
-                port:
-                  number: 9104
+
