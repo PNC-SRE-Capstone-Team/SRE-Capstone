@@ -38,7 +38,7 @@ jobs:
       
       - name: Apply ingress configurations
         run: |
-          sudo kubectl apply -f $GITHUB_WORKSPACE/nginx/configurations/nginxIngress.yaml -n nginx-ingress
+          sudo kubectl apply -f $GITHUB_WORKSPACE/nginx/configurations/nginxIngress.yaml -n ingress-nginx
           sudo kubectl apply -f $GITHUB_WORKSPACE/nginx/configurations/argoIngress.yaml -n argocd
           sudo kubectl apply -f $GITHUB_WORKSPACE/nginx/configurations/databaseIngress.yaml -n database
           sudo kubectl apply -f $GITHUB_WORKSPACE/nginx/configurations/monitoringIngress.yaml -n monitoring
