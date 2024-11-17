@@ -1,11 +1,4 @@
 argo-cd: 
-
-  global:
-    domain: argocd.damdiel.com
-
-  certificate:
-    enabled: true
-
   server:
     service:
       type: ClusterIP
@@ -15,18 +8,9 @@ argo-cd:
       servicePortHttp: 30442
       
   ingress:
-    enabled: true
-    ingressClassName: nginx
-    annotations:
-      kubernetes.io/ingress.class: "nginx"
-      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-      nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
-      nginx.ingress.kubernetes.io/ssl-passthrough: "true"
-    tls: true
+    enabled: false
 
   configs:
-    params:
-      server.insecure: true
     rbac:
       policy.csv: |
         p, role:admin, applications, *, */*, allow
