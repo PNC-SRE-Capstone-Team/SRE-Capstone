@@ -1,6 +1,9 @@
 #nginx/values.yaml
 controller:
   # sole loadbalancer service for cluster, all others will be accessed via cluster IP through ingress-nginx
+
+  defaultTLS.secret: ingress-nginx/wildcard-cert-tls
+
   service:
     type: LoadBalancer
     externalTrafficPolicy: Local
@@ -11,9 +14,6 @@ controller:
     enabled: true
   prometheusRule:
     enabled: true
-    
-extraArgs:
-  default-ssl-certificate: "ingress-nginx/wildcard-cert-tls"
 
 rbac:
   create: true
