@@ -1,6 +1,6 @@
 #grafana/values.yaml
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 30444
 
 persistence:
