@@ -15,6 +15,7 @@ spec:
     - hosts:
         - "*.damdiel.com"  # Wildcard domain for all services
       secretName: wildcard-cert-tls
+  rules:
     - host: mariadb.damdiel.com
       http:
         paths:
