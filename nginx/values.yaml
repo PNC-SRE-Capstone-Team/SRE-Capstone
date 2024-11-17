@@ -4,7 +4,7 @@ controller:
   service:
     type: LoadBalancer
     externalTrafficPolicy: Local
-    externalIPs: [10.100.200.23]
+    externalIPs: [10.100.200.23, 100.115.101.70]
 
   #Metrics for prometheus
   metrics:
