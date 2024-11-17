@@ -6,7 +6,6 @@ tls:
 # MongoDB service configuration
 service:
   type: LoadBalancer
-  externalIPs: [10.100.200.23]
   ports:
     mongodb: 27017
 
