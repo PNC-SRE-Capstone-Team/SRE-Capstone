@@ -6,6 +6,7 @@ tls:
   enabled: true
   mode: allowTLS
 
+
 # MongoDB service configuration
 service:
   type: ClusterIP
@@ -23,3 +24,7 @@ replicaSet:
 
 metrics:
   enabled: true
+
+extraFlags:
+  --setParameter tlsUseSystemCA=true
+
