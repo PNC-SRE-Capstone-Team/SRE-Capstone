@@ -1,5 +1,8 @@
 architecture: standalone
 
+tls: 
+  enabled: true
+
 # MongoDB service configuration
 service:
   type: ClusterIP
