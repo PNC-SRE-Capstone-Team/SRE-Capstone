@@ -6,7 +6,7 @@ argo-cd:
 
   server:
     service:
-      type: ClusterIP
+      type: LoadBalancer
       servicePortHttpsName: https
       servicePortHttps: 30443
       servicePortHttpName: http
