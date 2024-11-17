@@ -11,7 +11,7 @@ tls:
 service:
   type: ClusterIP
   ports:
-    mongodb: 30445
+    mongodb: 27017
 
 # Persistent storage settings
 persistence:

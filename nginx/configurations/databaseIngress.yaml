@@ -37,7 +37,7 @@ spec:
               service:
                 name: mongodb
                 port:
-                  number: 30445
+                  number: 27017
     - host: mongodb-metrics.damdiel.com
       http:
         paths:
