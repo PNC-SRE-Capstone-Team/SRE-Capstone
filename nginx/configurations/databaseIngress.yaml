@@ -13,7 +13,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - "*.damdiel.com"  # Wildcard domain for all services
+        - "mongodb.damdiel.com"
+        - "mongodb-metrics.damdiel.com"
+        - "mariadb.damdiel.com" 
+      secretName: wildcard-cert-tls
   rules:
     - host: mariadb.damdiel.com
       http:
