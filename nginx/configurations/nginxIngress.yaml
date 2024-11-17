@@ -13,8 +13,7 @@ metadata:
 spec:
   tls:
     - hosts:
-        - "*.damdiel.com"  # Wildcard domain for all services
-      secretName: wildcard-cert-tls
+        - "nginx-metrics.damdiel.com"
   rules:
     - host: nginx-metrics.damdiel.com
       http:

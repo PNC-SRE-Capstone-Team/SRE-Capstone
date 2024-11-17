@@ -10,11 +10,9 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/proxy-body-size: "10m"
-    nginx.ingress.kubernetes.io/default-tls-secret: "ingress-nginx/wildcard-cert-tls"
   tls:
     - hosts:
         - "*.damdiel.com"  # Wildcard domain for all services
-      secretName: wildcard-cert-tls
   rules:
     - host: grafana.damdiel.com
       http:
