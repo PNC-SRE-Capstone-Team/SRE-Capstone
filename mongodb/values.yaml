@@ -1,11 +1,7 @@
 architecture: standalone
 
 tls:
-  mTLS: 
-    enabled: false
-  enabled: true
-  mode: allowTLS
-
+  enabled: false
 
 # MongoDB service configuration
 service:
@@ -25,6 +21,6 @@ replicaSet:
 metrics:
   enabled: true
 
-extraFlags:
-  --setParameter tlsUseSystemCA=true
+#extraFlags:
+#  --setParameter tlsUseSystemCA=true
 
