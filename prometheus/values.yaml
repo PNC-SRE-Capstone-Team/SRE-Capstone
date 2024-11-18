@@ -2,5 +2,5 @@
 server:
   service:
     type: LoadBalancer
-    servicePort: 9104
+    servicePort: 30447
 

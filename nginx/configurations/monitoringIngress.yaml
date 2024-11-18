@@ -36,4 +36,4 @@ spec:
               service:
                 name: prometheus
                 port:
-                  number: 9104
+                  number: 30447
