@@ -1,3 +1,5 @@
+import json
+
 def build_summaries(docs):
 
 # total of each card type JSON
@@ -43,6 +45,8 @@ def build_summaries(docs):
     all_entry['Average Amount'] = get_average_amount(all_entry['Average Amount'])
     fraud_entry['Average Amount'] = get_average_amount(fraud_entry['Average Amount'])
 
+    jsonify(all_entry, fraud_entry)
+
     return [all_entry, fraud_entry]
 
 
@@ -60,6 +64,7 @@ def count_data(all_entry_dict, fraud_entry_dict, data_dict, is_fraud):
                 fraud_entry_dict[category][data_dict[category]] += 1
             else:
                 fraud_entry_dict[category].update({data_dict[category]: 1})
+                
 
     all_entry_dict["Average Amount"].append(data_dict["Amount"])
 
@@ -74,3 +79,9 @@ def get_average_amount(amounts):
 
      return '£' + str(round(sum(nums) / len(nums), 2))
 
+def jsonify(all, fraud):
+     categories = ["Type of Card", "Entry Mode", "Type of Transaction", "Merchant Group", "Country of Transaction", "Shipping Address", "Country of Residence", "Bank"]
+
+     for category in categories:
+          all[category] = json.dumps(all[category])
+          fraud[category] = json.dumps(fraud[category])
