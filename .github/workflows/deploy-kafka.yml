@@ -34,10 +34,6 @@ jobs:
         run: |
           sudo helm repo add bitnami https://charts.bitnami.com/bitnami
 
-      - name: Clear any existing PVCs
-        run: |
-          sudo kubectl delete pvc -n kafka --all
-
       - name: Deploy with ArgoCD CLI
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
