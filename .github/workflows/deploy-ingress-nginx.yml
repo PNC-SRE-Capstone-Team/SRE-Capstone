@@ -4,7 +4,7 @@ name: deploy-ingress-nginx
 on:
   # Triggers the workflow on push or pull request events
   push:
-    branches: [ "main", "argocd", "nginx" ]
+    branches: [ "main", "argocd", "nginx", "prometheus"]
     paths:
       - nginx/**
       - .github/workflows/deploy-ingress-nginx.yml
