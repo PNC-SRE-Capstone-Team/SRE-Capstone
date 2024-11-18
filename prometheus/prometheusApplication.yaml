@@ -17,7 +17,7 @@ spec:
 
     #values from git
     - repoURL: 'https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone'
-      targetRevision: prometheus
+      targetRevision: main
       ref: values
 
   destination:
