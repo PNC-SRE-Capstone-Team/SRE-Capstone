@@ -1,10 +1,14 @@
 architecture: standalone
 
+tls:
+  enabled: false
+
 # MongoDB service configuration
 service:
   type: LoadBalancer
+  externalIPs: [10.100.200.23]
   ports:
-    mongodb: 30445
+    mongodb: 27017
 
 # Persistent storage settings
 persistence:
@@ -17,3 +21,7 @@ replicaSet:
 
 metrics:
   enabled: true
+
+#extraFlags:
+#  --setParameter tlsUseSystemCA=true
+

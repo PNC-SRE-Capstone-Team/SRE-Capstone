@@ -17,7 +17,7 @@ spec:
 
     #values from git
     - repoURL: 'https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone'
-      targetRevision: main
+      targetRevision: nginx
       ref: values
 
   destination:
@@ -35,4 +35,4 @@ spec:
     backoff:
       duration: 5s
       maxDuration: 3m0s
-      factor: 2
+      factor: 2 

@@ -1,14 +1,14 @@
 argo-cd: 
   server:
     service:
-      type: LoadBalancer
-
+      type: ClusterIP
       servicePortHttpsName: https
       servicePortHttps: 30443
+      servicePortHttpName: http
+      servicePortHttp: 30442
       
-    # Disable Ingress in ArgoCD as we are using LoadBalancer
-    ingress:
-      enabled: false
+  ingress:
+    enabled: false
 
   configs:
     rbac:

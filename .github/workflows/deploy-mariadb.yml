@@ -4,7 +4,7 @@ name: deploy-mariadb
 on:
   # Triggers the workflow on push or pull request events
   push:
-    branches: [ "main" ]
+    branches: [ "main", "nginx" ]
     paths:
       - mariadb/**
       - .github/workflows/deploy-mariadb.yml
