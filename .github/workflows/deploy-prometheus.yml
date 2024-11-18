@@ -1,0 +1,41 @@
+name: deploy-prometheus
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events
+  push:
+    branches: [ "main", "prometheus", "nginx" ]
+    paths:
+      - prometheus/**
+      - .github/workflows/deploy-prometheus.yml
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - prometheus/**
+      - .github/workflows/deploy-prometheus.yml
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy-prometheus:
+    runs-on: self-hosted
+    steps:
+      - name: Clean up
+        run: |
+          sudo rm -rf /home/op/actions-runner/_work/SRE-Capstone/SRE-Capstone/*
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          clean: false
+            
+      - name: Add helm repo
+        run: |  
+            sudo helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+      - name: Deploy with ArgoCD CLI
+        run: |
+          argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
+          argocd app create -f prometheus/prometheusApplication.yaml --upsert
+

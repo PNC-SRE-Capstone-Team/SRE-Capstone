@@ -1,0 +1,6 @@
+#prometheus/values.yaml
+server:
+  service:
+    type: LoadBalancer
+    servicePort: 9104
+
