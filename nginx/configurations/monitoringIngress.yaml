@@ -15,7 +15,7 @@ spec:
     - hosts:
         - "grafana.damdiel.com"
         - "prometheus.damdiel.com"
-      secretName: wildcard-cert-tls
+      secretName: ingress-nginx/wildcard-cert-tls
   rules:
     - host: grafana.damdiel.com
       http:
