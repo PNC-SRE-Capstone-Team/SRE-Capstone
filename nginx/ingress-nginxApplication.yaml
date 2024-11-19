@@ -1,28 +1,27 @@
-# mongodb-app.yaml
+# nginx/ingress-nginxApplication.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: mongodb
+  name: ingress-nginx
   namespace: argocd
 spec:
   project: default
   sources:
-    #Bitnami helm chart
-    - chart: mongodb
-      repoURL: https://charts.bitnami.com/bitnami
-      targetRevision: 16.2.1
+    - chart: ingress-nginx
+      repoURL: https://kubernetes.github.io/ingress-nginx
+      targetRevision: 4.11.3
       helm:
         valueFiles:
-          - $values/mongodb/values.yaml
-
-    #values from git
+          - $values/nginx/values.yaml
+    
+    # External values from Git
     - repoURL: 'https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone'
       targetRevision: main
       ref: values
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: database
+    namespace: ingress-nginx
     
   syncPolicy:
     automated:

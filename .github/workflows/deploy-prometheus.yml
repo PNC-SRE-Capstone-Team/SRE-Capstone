@@ -1,25 +1,24 @@
-name: deploy-mongodb
+name: deploy-prometheus
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events
   push:
-    branches: [ "main", "nginx" ]
+    branches: [ "main", "prometheus", "nginx" ]
     paths:
-      - mongodb/**
-      - .github/workflows/deploy-mongodb.yml
+      - prometheus/**
+      - .github/workflows/deploy-prometheus.yml
   pull_request:
     branches: [ "main" ]
     paths:
-      - mongodb/**
-      - .github/workflows/deploy-mongodb.yml
+      - prometheus/**
+      - .github/workflows/deploy-prometheus.yml
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-
 jobs:
-  deploy-mongdb:
+  deploy-prometheus:
     runs-on: self-hosted
     steps:
       - name: Clean up
@@ -30,12 +29,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           clean: false
-
-      - name: Add helm repo with bitnami chart
+            
+      - name: Add helm repo
         run: |  
-          sudo helm repo add bitnami https://charts.bitnami.com/bitnami
+            sudo helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 
       - name: Deploy with ArgoCD CLI
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
-          argocd app create -f mongodb/mongoApplication.yaml --upsert --helm-set auth.username=${{ secrets.MONGO_USERNAME }} --helm-set auth.password=${{ secrets.MONGO_PASSWORD }} --helm-set auth.rootPassword=${{ secrets.MONGO_PASSWORD }}
+          argocd app create -f prometheus/prometheusApplication.yaml --upsert
+

@@ -4,7 +4,7 @@ name: deploy-mariadb
 on:
   # Triggers the workflow on push or pull request events
   push:
-    branches: [ "main" ]
+    branches: [ "main", "nginx" ]
     paths:
       - mariadb/**
       - .github/workflows/deploy-mariadb.yml
@@ -38,4 +38,4 @@ jobs:
       - name: Deploy with ArgoCD CLI
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
-          argocd app create -f mariadb/mariadbApplication.yaml --upsert --helm-set auth.username=${{ secrets.MARIADB_USERNAME }} --helm-set auth.password=${{ secrets.MARIADB_PASSWORD }}
+          argocd app create -f mariadb/mariadbApplication.yaml --upsert --helm-set auth.username=${{ secrets.MARIADB_USERNAME }},auth.password=${{ secrets.MARIADB_PASSWORD }}

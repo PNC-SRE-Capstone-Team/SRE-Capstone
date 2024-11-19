@@ -5,7 +5,10 @@ primary:
     size: 8Gi
   service:
     type: LoadBalancer
-    port: 30446
+    ports: 
+      mysql: 30446
 
 metrics:
   enabled: true
+
+auth.database: maria_appDB
