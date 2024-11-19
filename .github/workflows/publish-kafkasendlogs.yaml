@@ -10,6 +10,6 @@ jobs:
       - name: Build and push the image
         run: |
           cd ./kafkaSendLogs
-          docker login --username ajgrf --password ${{ secrets.CONTAINER_REGISTRY_TOKEN }} ghcr.io
+          docker login --username ${{ secrets.CONTAINER_REGISTRY_USERNAME }} --password ${{ secrets.CONTAINER_REGISTRY_TOKEN }} ghcr.io
           docker build . -t ghcr.io/pnc-sre-capstone-team/kafkasendlogs:latest
           docker push ghcr.io/pnc-sre-capstone-team/kafkasendlogs:latest
