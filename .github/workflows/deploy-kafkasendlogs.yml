@@ -33,7 +33,7 @@ jobs:
       - name: Build the image
         run: |
           cd ./kafkaSendLogs
-          docker login --username ${{ secrets.CONTAINER_REGISTRY_USERNAME }} --password ${{ secrets.CONTAINER_REGISTRY_TOKEN }} ghcr.io
+          sudo docker login --username ${{ secrets.CONTAINER_REGISTRY_USERNAME }} --password ${{ secrets.CONTAINER_REGISTRY_TOKEN }} ghcr.io
           sudo docker build . -t ghcr.io/pnc-sre-capstone-team/kafkasendlogs:latest
           sudo docker push ghcr.io/pnc-sre-capstone-team/kafkasendlogs:latest
       - name: Deploy with ArgoCD CLI
