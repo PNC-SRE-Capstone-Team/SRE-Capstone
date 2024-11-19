@@ -25,7 +25,7 @@ broker:
     create: false
 listeners:
   client:
-    protocol: SASL_PLAINTEXT
+    protocol: SASL
 
 auth:
   interBrokerProtocol: plaintext
