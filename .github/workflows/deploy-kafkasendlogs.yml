@@ -37,4 +37,4 @@ jobs:
       - name: Deploy with ArgoCD CLI
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
-          argocd app create -f kafkaSendLogs/kafkaApplication.yaml --upsert
+          argocd app create -f kafkaSendLogs/kafkaSendLogsApplication.yaml --upsert
