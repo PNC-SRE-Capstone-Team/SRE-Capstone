@@ -15,5 +15,7 @@ spec:
     spec:
       containers:
         - name: kafkasendlogs
-          image: kafkasendlogs
-          imagePullPolicy: Never
+          image: kafkasendlogs:latest
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: ghcrcred
