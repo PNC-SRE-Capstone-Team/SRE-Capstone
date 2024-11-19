@@ -1,0 +1,14 @@
+name: apply-ghcrcred
+
+on: push
+
+jobs:
+  apply-ghcrcred-secret:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply private container registry secret
+        run: |
+          echo "${{ secrets.CONTAINER_REGISTRY_CRED }}" | base64 --decode - > ghcrcredSecret.yml
+          sudo kubectl apply -f ghcrcredSecret.yml
+          rm ghcrcredSecret.yml  # Clean up after applying
