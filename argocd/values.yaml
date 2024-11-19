@@ -1,4 +1,10 @@
 argo-cd: 
+  #Prometheus Configuration
+  controller:
+    metrics:
+      enabled: true
+
+
   server:
     service:
       type: ClusterIP
