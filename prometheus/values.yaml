@@ -8,6 +8,6 @@ extraScrapeConfigs: |
   - job_name: "argocd-server"
     metrics_path: /metrics
     static_configs:
-      - targets: ['argo-cd-argocd-server.argocd.svc.cluster.local:8083']
+      - targets: ['argo-cd-argocd-server-metrics.argocd.svc.cluster.local:8083']
 
 
