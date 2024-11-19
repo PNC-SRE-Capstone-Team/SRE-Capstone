@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kafkaSendLogs
+  name: kafkasendlogs
   namespace: argocd
 spec:
   project: default
