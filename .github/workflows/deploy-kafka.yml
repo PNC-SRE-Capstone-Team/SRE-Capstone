@@ -37,4 +37,4 @@ jobs:
       - name: Deploy with ArgoCD CLI
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
-          argocd app create -f kafka/kafkaApplication.yaml --upsert --helm-set sasl.client.users[0]=${{ secrets.KAFKA_USERNAME }} --helm-set sasl.client.passwords[0]=${{ secrets.KAFKA_PASSWORD }}
+          argocd app create -f kafka/kafkaApplication.yaml --upsert

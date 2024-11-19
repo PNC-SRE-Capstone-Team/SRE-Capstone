@@ -23,9 +23,6 @@ broker:
   automountServiceAccountToken: true
   pdb:
     create: false
-listeners:
-  client:
-    protocol: SASL
 
 auth:
   interBrokerProtocol: plaintext
