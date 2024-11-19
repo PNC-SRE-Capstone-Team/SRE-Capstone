@@ -39,7 +39,7 @@ def main():
     fname = args.filename
     speed = args.speed
 
-    conf = {'bootstrap.servers': 'localhost:9092',
+    conf = {'bootstrap.servers': 'kafka-controller-headless.kafka.svc.cluster.local:9092',
             'client.id': socket.gethostname()}
     producer = Producer(conf)
 
