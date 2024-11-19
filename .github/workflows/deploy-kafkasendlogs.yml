@@ -18,16 +18,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build and push the image
-        run: |
-          cd ./kafkaSendLogs
-          sudo docker build . -t kafkasendlogs:latest
-          sudo docker save kafkasendlogs:latest | sudo k3s ctr images import -
-  deploy-kafkaSendLogs:
+  build_and_deploy_kafkaSendLogs:
     runs-on: self-hosted
     steps:
       - name: Clean up
@@ -39,6 +30,11 @@ jobs:
         with:
           clean: false
 
+      - name: Build the image
+        run: |
+          cd ./kafkaSendLogs
+          sudo docker build . -t kafkasendlogs:latest
+          sudo docker save kafkasendlogs:latest | sudo k3s ctr images import -
       - name: Deploy with ArgoCD CLI
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
