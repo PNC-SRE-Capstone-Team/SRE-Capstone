@@ -9,5 +9,9 @@ extraScrapeConfigs: |
     metrics_path: /metrics
     static_configs:
       - targets: ['argo-cd-argocd-server-metrics.argocd.svc.cluster.local:8083']
+  - job_name: "argocd-app-server"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['argo-cd-argocd-application-controller-metrics.argocd.svc.cluster.local:8082']
 
 
