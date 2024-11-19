@@ -14,7 +14,8 @@ spec:
         app: kafkasendlogs
     spec:
       containers:
-        - image:
+        - name: kafkasendlogs
+          image:
           repository: library/kafkasendlogs
           tag: latest
           imagePullPolicy: Never
