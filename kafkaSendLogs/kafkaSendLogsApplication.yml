@@ -1,0 +1,29 @@
+# kafkaSendLogs/kafkaSendLogsApplication.yml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kafkaSendLogs
+  namespace: kafka
+spec:
+  project: default
+  source:
+    #values from git
+    repoURL: "https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone"
+    targetRevision: main
+    path: kafkaSendLogs/issuer/manifest
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 2
+    backoff:
+      duration: 5s
+      maxDuration: 3m0s
+      factor: 2
