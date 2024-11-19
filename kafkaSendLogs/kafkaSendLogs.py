@@ -7,15 +7,11 @@ import argparse
 import csv
 import datetime
 import json
-import os
 import socket
 import sys
 import time
 
 from confluent_kafka import Producer
-
-KAFKA_USERNAME = os.getenv("KAFKA_USERNAME")
-KAFKA_PASSWORD = os.getenv("KAFKA_PASSWORD")
 
 
 # Send ~100 transactions per second.
@@ -44,10 +40,7 @@ def main():
     speed = args.speed
 
     conf = {'bootstrap.servers': 'kafka-controller-headless.kafka.svc.cluster.local:9092',
-            'client.id': socket.gethostname(),
-            'security.protocol': 'SASL_PLAINTEXT',
-            'sasl.username': KAFKA_USERNAME,
-            'sasl.password': KAFKA_PASSWORD}
+            'client.id': socket.gethostname()}
     producer = Producer(conf)
 
     with open(fname, "r") as csvfile:

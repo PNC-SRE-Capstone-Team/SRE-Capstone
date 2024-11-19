@@ -17,10 +17,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  KAFKA_USERNAME: "${{ secrets.KAFKA_USERNAME }}"
-  KAFKA_PASSWORD: "${{ secrets.KAFKA_PASSWORD }}"
-
 jobs:
   build_and_deploy_kafkaSendLogs:
     runs-on: self-hosted
@@ -38,7 +34,7 @@ jobs:
         run: |
           cd ./kafkaSendLogs
           sudo docker login --username ${{ secrets.CONTAINER_REGISTRY_USERNAME }} --password ${{ secrets.CONTAINER_REGISTRY_TOKEN }} ghcr.io
-          sudo docker build --build-arg KAFKA_USERNAME="$KAFKA_USERNAME" --build-arg KAFKA_PASSWORD="$KAFKA_PASSWORD" -t ghcr.io/pnc-sre-capstone-team/kafkasendlogs:latest .
+          sudo docker build . -t ghcr.io/pnc-sre-capstone-team/kafkasendlogs:latest
           sudo docker push ghcr.io/pnc-sre-capstone-team/kafkasendlogs:latest
       - name: Deploy with ArgoCD CLI
         run: |
