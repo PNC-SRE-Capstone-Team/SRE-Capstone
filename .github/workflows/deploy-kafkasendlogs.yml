@@ -19,7 +19,7 @@ on:
 
 jobs:
   build_and_deploy_kafkaSendLogs:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Clean up
         run: |
