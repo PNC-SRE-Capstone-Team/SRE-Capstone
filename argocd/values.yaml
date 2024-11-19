@@ -8,6 +8,8 @@ argo-cd:
 
 
   server:
+    metrics:
+      enabled: true
     service:
       type: ClusterIP
       servicePortHttpsName: https
