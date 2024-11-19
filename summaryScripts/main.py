@@ -44,9 +44,10 @@ while True:
 
     #summary builder
     docs = collection.find({"Date": date_string, "Time": {"$gte": time_start, "$lt": time_end}})
-    if not docs:
+    if not list(docs):
         print("No documents found in this time window")
         continue
+
     summaries = summary_builder.build_summaries(docs)
 
     #establish connection and cursor
