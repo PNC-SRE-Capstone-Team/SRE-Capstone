@@ -1,0 +1,40 @@
+name: deploy-kafkasendlogs
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events
+  push:
+    branches: ["main" "kafka"]
+    paths:
+      - kafkaSendLogs/**
+      - .github/workflows/deploy-kafkasendlogs.yml
+  pull_request:
+    branches: ["main"]
+    paths:
+      - kafkaSendLogs/**
+      - .github/workflows/deploy-kafkasendlogs.yml
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy-kafkaSendLogs:
+    runs-on: self-hosted
+    steps:
+      - name: Clean up
+        run: |
+          sudo rm -rf /home/op/actions-runner/_work/SRE-Capstone/SRE-Capstone/*
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          clean: false
+
+      - name: Add helm repo with bitnami chart
+        run: |
+          sudo helm repo add bitnami https://charts.bitnami.com/bitnami
+
+      - name: Deploy with ArgoCD CLI
+        run: |
+          argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
+          argocd app create -f kafkaSendLogs/kafkaApplication.yaml --upsert

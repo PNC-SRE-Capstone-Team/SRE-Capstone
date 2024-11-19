@@ -1,0 +1,14 @@
+name: Docker Image CI for kafkaSendLogs
+
+on: push
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and push the image
+        run: |
+          cd ./kafkaSendLogs
+          docker build . -t kafkasendlogs:latest
+          docker save kafkasendlogs:latest | sudo k3s ctr images import -

@@ -1,0 +1,19 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafkaSendLogs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafkaSendLogs
+  template:
+    metadata:
+      labels:
+        app: kafkaSendLogs
+    spec:
+      containers:
+        - name: kafkaSendLogs
+          image: kafkasendlogs:latest
+          imagePullPolicy: Never
