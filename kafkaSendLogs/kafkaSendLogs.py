@@ -46,6 +46,7 @@ def main():
     conf = {'bootstrap.servers': 'kafka-controller-headless.kafka.svc.cluster.local:9092',
             'client.id': socket.gethostname(),
             'security.protocol': 'SASL_PLAINTEXT',
+            'sasl.mechanism': 'PLAIN',
             'sasl.username': KAFKA_USERNAME,
             'sasl.password': KAFKA_PASSWORD}
     producer = Producer(conf)
