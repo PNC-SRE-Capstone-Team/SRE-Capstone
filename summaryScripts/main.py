@@ -1,8 +1,8 @@
 from pymongo import MongoClient
 import mysql.connector
 from environs import Env
-import schedule
 import time
+from datetime import datetime, timedelta
 import csv
 import summary_builder
 import query_builder
@@ -42,38 +42,43 @@ if sql.is_connected():
 cursor = sql.cursor()
 
 # while loop that will only trigger every hour
-#schedule.every().hour.do()
-# while True:
-#    schedule.run_pending()
-#    time.sleep(1)
+while True:
+    now = datetime.now()
 
-#test summary builder
-docs = collection.find({})
-summaries = summary_builder.build_summaries(docs)
+    next_hour = (now + timedelta(hours=1)).replace(minute=0, second=0, microsecond=0)
+    sleep_time = (next_hour - now).total_seconds()
 
-#test query builder
-try:
-    sql.start_transaction()
+    time.sleep(sleep_time)
 
-    cursor.execute("DELETE FROM transaction_summaries")
+    #test summary builder
+    docs = collection.find({})
+    summaries = summary_builder.build_summaries(docs)
 
-    transacton_query, transaction_data = query_builder.build_query(summaries[0])
-    fraud_query, fraud_data = query_builder.build_query(summaries[1])
+    #test query builder
+    try:
+        sql.start_transaction()
 
-    cursor.execute(transacton_query, transaction_data)
-    cursor.execute(fraud_query, fraud_data)
+        cursor.execute("DELETE FROM transaction_summaries")
 
-    sql.commit()
-    print("INSERT successful")
-    
-except mysql.connector.Error as err:
-    print(f"Error: {err}")
-    sql.rollback()
+        transacton_query, transaction_data = query_builder.build_query(summaries[0])
+        fraud_query, fraud_data = query_builder.build_query(summaries[1])
 
-cursor.execute("SELECT * FROM transaction_summaries")
-res = cursor.fetchall()
-for row in res:
-    print(row)
+        cursor.execute(transacton_query, transaction_data)
+        cursor.execute(fraud_query, fraud_data)
+
+        sql.commit()
+        print("INSERT successful")
+        
+    except mysql.connector.Error as err:
+        print(f"Error: {err}")
+        sql.rollback()
+
+    cursor.execute("SELECT * FROM transaction_summaries")
+    res = cursor.fetchall()
+    for row in res:
+        print(row)
+
+    print("Executed at: " + str(datetime.now()))
 
 cursor.close()
 sql.close()
