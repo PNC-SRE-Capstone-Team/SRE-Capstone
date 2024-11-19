@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - image:
-          repository: docker.io/library/kafkasendlogs
+          repository: library/kafkasendlogs
           tag: latest
           imagePullPolicy: Never
