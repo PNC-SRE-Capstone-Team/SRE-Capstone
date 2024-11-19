@@ -16,4 +16,4 @@ spec:
       containers:
         - name: kafkasendlogs
           image: kafkasendlogs
-          imagePullPolicy: ifNotPresent
+          imagePullPolicy: IfNotPresent
