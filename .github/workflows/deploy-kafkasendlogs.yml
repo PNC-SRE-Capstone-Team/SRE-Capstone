@@ -34,7 +34,7 @@ jobs:
         run: |
           cd ./kafkaSendLogs
           sudo docker build . -t kafkasendlogs:latest
-          sudo docker save kafkasendlogs:latest | sudo k3s ctr images import -
+          sudo docker push ghcr.io/pnc-sre-capstone-team/kafkasendlogs
       - name: Deploy with ArgoCD CLI
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
