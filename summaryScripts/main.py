@@ -3,7 +3,6 @@ import mysql.connector
 from environs import Env
 import time
 from datetime import datetime, timedelta, timezone
-import csv
 import summary_builder
 import query_builder
 
