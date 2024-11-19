@@ -1,23 +1,17 @@
 from pymongo import MongoClient
 import mysql.connector
-from environs import Env
+import os
 import time
 from datetime import datetime, timedelta, timezone
 import summary_builder
 import query_builder
 
 #init env
-env = Env()
-env.read_env()
+mongo_uri = os.getenv("MONGO_URI")
 
-cluster = env.str("CLUSTER_IP")
-
-mongo_uri = env.str("MONGO_URI")
-
-
-mysql_port = env.str("MYSQL_PORT")
-mysql_user = env.str("MYSQL_USER")
-mysql_pw = env.str("MYSQL_PW")
+mysql_port = os.getenv("MYSQL_PORT")
+mysql_user = os.getenv("MYSQL_USER")
+mysql_pw = os.getenv("MYSQL_PW")
 
 
 # while loop that will only trigger every hour
@@ -52,7 +46,7 @@ while True:
 
     #establish connection and cursor
     sql = mysql.connector.connect(
-        host=cluster,
+        host="mariadb_headless.database.svc.cluster.local",
         user=mysql_user,
         password=mysql_pw,
         port=mysql_port,
