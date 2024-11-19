@@ -1,0 +1,14 @@
+name: Docker Image CI for kafkaSendLogs
+
+on: push
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and push the image
+        run: |
+          docker login --username ajgrf --password ${{ secrets.CONTAINER_REGISTRY_TOKEN }} ghcr.io
+          docker build . -t ghcr.io/pnc-sre-capstone-team/kafkasendlogs:latest
+          docker push ghcr.io/pnc-sre-capstone-team/kafkasendlogs:latest
