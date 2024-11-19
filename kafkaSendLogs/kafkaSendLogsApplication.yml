@@ -9,12 +9,12 @@ spec:
   source:
     #values from git
     repoURL: "https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone"
-    targetRevision: main
-    path: kafkaSendLogs/issuer/manifest
+    targetRevision: kafka
+    path: kafkaSendLogs/manifest
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: default
+    namespace: kafka
   syncPolicy:
     automated:
       prune: true
