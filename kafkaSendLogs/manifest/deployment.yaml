@@ -14,6 +14,7 @@ spec:
         app: kafkasendlogs
     spec:
       containers:
-        - name: kafkasendlogs
-          image: kafkasendlogs:latest
+        - image:
+          repository: docker.io/library/kafkasendlogs
+          tag: latest
           imagePullPolicy: Never
