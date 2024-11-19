@@ -10,5 +10,5 @@ jobs:
       - name: Build and push the image
         run: |
           cd ./kafkaSendLogs
-          docker build . -t kafkasendlogs:latest
-          docker save kafkasendlogs:latest | sudo k3s ctr images import -
+          sudo docker build . -t kafkasendlogs:latest
+          sudo docker save kafkasendlogs:latest | sudo k3s ctr images import -
