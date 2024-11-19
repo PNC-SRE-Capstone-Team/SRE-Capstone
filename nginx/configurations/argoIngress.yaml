@@ -14,7 +14,8 @@ metadata:
 spec:
   tls:
     - hosts:
-        - "argo.damdiel.com" 
+        - "argo.damdiel.com"
+        - "argometrics.damdiel.com"
       secretName: argocd-server-tls
   rules:
     - host: argo.damdiel.com
@@ -27,3 +28,13 @@ spec:
                 name: argo-cd-argocd-server
                 port:
                   number: 30443
+    - host: "argometrics.damdiel.com"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argo-cd-argocd-application-controller-metrics
+                port:
+                  number: 8082
