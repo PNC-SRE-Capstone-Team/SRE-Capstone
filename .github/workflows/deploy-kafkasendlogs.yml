@@ -18,6 +18,15 @@ on:
   workflow_dispatch:
 
 jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and push the image
+        run: |
+          cd ./kafkaSendLogs
+          sudo docker build . -t kafkasendlogs:latest
+          sudo docker save kafkasendlogs:latest | sudo k3s ctr images import -
   deploy-kafkaSendLogs:
     runs-on: self-hosted
     steps:
@@ -29,10 +38,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           clean: false
-
-      - name: Add helm repo with bitnami chart
-        run: |
-          sudo helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Deploy with ArgoCD CLI
         run: |
