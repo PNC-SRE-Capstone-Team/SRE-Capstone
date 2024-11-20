@@ -15,7 +15,7 @@ trained_columns = joblib.load('trained_columns.joblib')
 
 def preprocess_transaction(data):
     # Filter out unneeded keys
-    filtered_data = {key: value for key, value in json.loads(data).items() if key not in ['transaction_id', 'date', 'fraud']}
+    filtered_data = {key: value for key, value in data.items() if key not in ['transaction_id', 'date', 'fraud']}
 
     # Map old keys to new formatted keys
     key_format_mapping = {
