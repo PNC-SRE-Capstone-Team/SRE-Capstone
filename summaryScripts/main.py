@@ -7,6 +7,7 @@ import summary_builder
 import query_builder
 import logging
 
+
 #init env
 mongo_uri = os.getenv("MONGO_URI")
 
@@ -40,7 +41,7 @@ while True:
 
     #summary builder
     docs = collection.find({"Date": date_string, "Time": {"$gte": time_start, "$lt": time_end}})
-    if not list(docs):
+    if not docs.alive:
         logging.warning("No documents found in this time window")
         continue
 
