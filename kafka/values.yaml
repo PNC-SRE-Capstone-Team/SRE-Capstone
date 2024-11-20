@@ -5,19 +5,13 @@ externalAccess:
       type: NodePort
       ports:
         external: 9094
-      externalIPs: |
-        10.100.200.32
-        10.100.200.33
-        10.100.200.35
+      externalIPs: [10.100.200.32,10.100.200.33,10.100.200.35]
   controller:
     service:
       type: NodePort
       containerPorts:
         external: 9094
-      externalIPs: |
-        10.100.200.32
-        10.100.200.33
-        10.100.200.35
+      externalIPs: [10.100.200.32,10.100.200.33,10.100.200.35]
 
 serviceAccount:
   create: true
