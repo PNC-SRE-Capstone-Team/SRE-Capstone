@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: summaryscripts
-          image: ghcr.io/pnc-sre-capstone-teams/sre-capstone/summaryscriptsapp:latest
+          image: ghcr.io/pnc-sre-capstone-team/summaryscriptsapp:latest
           imagePullPolicy: Always
       imagePullSecrets:
         - name: ghcrcred
