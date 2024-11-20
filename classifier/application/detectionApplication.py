@@ -113,7 +113,7 @@ def main():
             logging.warning("prediction failure")
 
         features['Fraud'] = int(prediction)
-        features['ID'] = transactionDict['transaction_id']
+        features['ID'] = transaction['transaction_id']
 
         # Get the current UTC datetime
         current_datetime = datetime.utcnow()
