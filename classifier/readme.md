@@ -32,14 +32,14 @@ Classification Report:
 # Model 3
 
 Classification Report:
+              
+                    precision    recall  f1-score   support
 
-                precision    recall  f1-score   support
+                0       0.99      0.98      0.99     18610
+                1       0.79      0.85      0.82      1390
 
-            0       0.99      0.97      0.98     18610
-            1       0.66      0.85      0.75      1390
-
-    accuracy                            0.96     20000
-    macro avg       0.83      0.91      0.86     20000
-    weighted avg    0.97      0.96      0.96     20000
+    accuracy                                0.97     20000
+    macro avg           0.89      0.92      0.90     20000
+    weighted avg        0.98      0.97      0.97     20000
 
 ##

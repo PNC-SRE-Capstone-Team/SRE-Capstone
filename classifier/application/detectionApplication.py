@@ -5,10 +5,17 @@ from pymongo import MongoClient
 import logging
 import os
 from datetime import datetime
+import pandas as pd
+
+# Load the model
+model = joblib.load('model.joblib')
+
+# Load trained feature names
+trained_columns = joblib.load('trained_columns.joblib')  
 
 def preprocess_transaction(data):
     # Filter out unneeded keys
-    filtered_data = {key: value for key, value in data.items() if key not in ['transaction_id', 'date', 'fraud']}
+    filtered_data = {key: value for key, value in json.loads(data).items() if key not in ['transaction_id', 'date', 'fraud']}
 
     # Map old keys to new formatted keys
     key_format_mapping = {
@@ -28,10 +35,31 @@ def preprocess_transaction(data):
     }
 
     # Apply the new key format
-    formatted_data = {key_format_mapping[key]: value for key, value in features.items()}
+    formatted_data = {key_format_mapping[key]: value for key, value in filtered_data.items()}
+    
+    # Convert the transaction dictionary to a DataFrame
+    df = pd.DataFrame([formatted_data])
 
+        # Convert numeric fields
+    numeric_fields = ['Amount', 'Age', 'Time']  # Specify fields that should be numeric
+    for field in numeric_fields:
+        if field in df:
+            df[field] = (
+                df[field].str.replace('£', '').astype(float) if df[field].dtype == object else df[field]
+            )
 
-    return formatted_data
+    # One-hot encode categorical columns
+    df = pd.get_dummies(df)
+
+    # Align with training columns (fill missing columns with 0)
+    df = df.reindex(columns=trained_columns, fill_value=0)
+
+    # Convert the processed row back to a dictionary
+    processed_data = df.iloc[0]
+
+    #print(processed_data)  # Return as a NumPy array (1D)
+
+    return processed_data # Return as a NumPy array (1D)
 
 
 
@@ -39,10 +67,7 @@ def main():
 
 
     #init mongo uri
-    mongo_uri = os.getenv("MONGO_URI")
-
-    # Load the model
-    model = joblib.load('model.joblib')
+    #mongo_uri = os.getenv("MONGO_URI")
 
     #Init logs
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -78,13 +103,17 @@ def main():
         #Transform the incoming msg into a parsable json
         transaction = json.loads(msg.value().decode('utf-8'))
         logging.info(transaction)
-
+        
+        transactionDict = json.loads(transaction)
         #process and predict fraud
         features = preprocess_transaction(transaction)
-        prediction = model.predict([features])[0]
+        try:
+            prediction = model.predict([features])[0]
+        except:
+            logging.warning("prediction failure")
 
         features['Fraud'] = int(prediction)
-        features['ID'] = transaction['transaction_id']
+        features['ID'] = transactionDict['transaction_id']
 
         # Get the current UTC datetime
         current_datetime = datetime.utcnow()
@@ -92,10 +121,10 @@ def main():
         features['Date'] = current_datetime.strftime("%Y-%m-%d")
         features['Time'] = current_datetime.strftime("%H:%M:%S.%f")
 
-        logging.info(features)
-
         # Store in MongoDB
         collection.insert_one(features)
+
+        logging.info("Inserted document: " + features)
 
 
 

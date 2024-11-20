@@ -4,7 +4,7 @@ name: deploy-grafana
 on:
   # Triggers the workflow on push or pull request events
   push:
-    branches: [ "main", "grafana" ]
+    branches: [ "main", "grafana", "nginx" ]
     paths:
       - grafana/**
       - .github/workflows/deploy-grafana.yml
