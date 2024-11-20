@@ -31,9 +31,6 @@ while True:
     next_task = (now + timedelta(minutes=5))
     sleep_time = (next_task - now).total_seconds()
 
-    logging.info("Starting 5 minute sleep cycle")
-    time.sleep(sleep_time)
-
     #establish mongo connection
     mongo = MongoClient(mongo_uri)
     mongo_db = mongo["prod"]
@@ -89,4 +86,7 @@ while True:
         mongo.close()
 
     logging.info("Executed at: " + str(datetime.now()))
+
+    logging.info("Starting 5 minute sleep cycle")
+    time.sleep(sleep_time)
 
