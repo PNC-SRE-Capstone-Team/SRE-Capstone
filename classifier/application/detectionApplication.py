@@ -104,7 +104,7 @@ def main():
         transaction = json.loads(msg.value().decode('utf-8'))
         logging.info(transaction)
         
-        transactionDict = json.loads(transaction)
+        #transactionDict = json.loads(transaction)
         #process and predict fraud
         features = preprocess_transaction(transaction)
         try:
