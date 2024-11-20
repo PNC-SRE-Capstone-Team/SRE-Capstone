@@ -35,4 +35,113 @@ sudo systemctl status github-action-runner.service
 
 The download, extraction, and installation of the service can eventually be ported over to ansible, but this is non-critical.
 
+## Summary Script Microservice
+The summary script microservice is deployed within the database namespace within the kubernetes cluster. This made the most since as the purpose of the service was to ingest logs from MongoDB, interpret and summarize those logs, and then finally insert a summary into the mysql database every five minutes. Here are the main pieces of code that make the service work: 
+
+#### Scheduler
+The scheduler is used to both find logs from the last 5 minutes as well as sleep the program between queries:
+```python
+now = datetime.now(timezone.utc)
+
+date = now.date()
+timestamp = now.time()
+
+time_start = str((now - timedelta(minutes=5)).time())
+time_end = str(timestamp)
+date_string = str(date)
+
+next_task = (now + timedelta(minutes=5))
+sleep_time = (next_task - now).total_seconds()
+```
+
+#### Summary Builder
+The summary builder is the function that ingests the mongo logs and tabulates the data into the 5 minute summaries. We decided on building summaries for 2 tables, one for all transaction summaries and another for only fraud transactions. Most fields were simply tablulated, for example we counted how many transactions came from each country, but for transaction amounts we found it would be more effective to average it.
+
+The base summary builder python creates the dictionaries that will store our data and sends it to the counting function before converting the dictionaries to JSON and shipping it to the SQL query builder.
+```python
+def build_summaries(docs):
+    for doc in docs:
+
+        if doc["Fraud"] == 1:
+             count_data(all_transactions, fraud_transactions, doc, True)
+        else:
+             count_data(all_transactions, fraud_transactions, doc, False)
+
+    #get average amount
+
+    all_transactions['Average Amount'] = get_average_amount(all_transactions['Average Amount'])
+    fraud_transactions['Average Amount'] = get_average_amount(fraud_transactions['Average Amount'])
+
+    jsonify(all_transactions, fraud_transactions)
+
+    return [all_transactions, fraud_transactions]
+```
+
+The count data function is how we are interpreting the data coming from the mongo logs and adding it to the tally within the transaction dictionaries.
+```python
+def count_data(all_transactions_dict, fraud_transactions_dict, data_dict, is_fraud):
+    categories = ["Type of Card", "Entry Mode", "Type of Transaction", "Merchant Group", "Country of Transaction", "Shipping Address", "Country of Residence", "Bank"]
+
+    for category in categories:
+        if data_dict[category] in all_transactions_dict[category]:
+                all_transactions_dict[category][data_dict[category]] += 1
+        else:
+            all_transactions_dict[category].update({data_dict[category]: 1})
+
+        if is_fraud:
+            if data_dict[category] in fraud_transactions_dict[category]:
+                fraud_transactions_dict[category][data_dict[category]] += 1
+            else:
+                fraud_transactions_dict[category].update({data_dict[category]: 1})
+                
+
+    all_transactions_dict["Average Amount"].append(data_dict["Amount"])
+
+    if is_fraud:
+        fraud_transactions_dict["Average Amount"].append(data_dict["Amount"])
+        all_transactions_dict["Fraud"] += 1
+```
+
+After the data has been tabulated and the amounts have been averaged the script will convert the dictionaries to JSON and return the JSON to the main function to be used in the SQL queries.
+
+#### SQL Query Builder
+In order to automate the process of inserting the data into MySQL we had to create a function that would make the SQL queries with the data given. Since we have 2 summaries that don't share all the same fields the function simply runs a check to see what fields the JSON has and returns the corresponding SQL query as well as the data for that query packaged in a tuple for the MySql Cursor.
+
+```python
+def build_query(summary):
+        query = """
+        INSERT INTO transaction_summaries (
+            created_at,
+            card_type, 
+            entry_mode, 
+            average_amount, 
+            transaction_type, 
+            merchant_group, 
+            transaction_country,
+            shipping_address,
+            residence_country,
+            bank,
+            fraud_count
+        ) VALUES (
+            NOW(), %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+        )"""
+
+        data = (
+            summary["Type of Card"], 
+            summary["Entry Mode"], 
+            summary["Average Amount"], 
+            summary["Type of Transaction"], 
+            summary["Merchant Group"], 
+            summary["Country of Transaction"], 
+            summary["Shipping Address"], 
+            summary["Country of Residence"],
+            summary["Bank"],
+            summary["Fraud"]
+            )
+
+    return query, data
+```
+
+After the main function receives the query and data back it inserts it into the designated tables, closes the database connections, and then sleeps for 5 minutes before the next summary will be made.
+
 ##
