@@ -109,6 +109,7 @@ def main():
             prediction = model.predict([features])[0]
         except:
             logging.warning("prediction failure")
+            prediction = 0
 
         formatted_data['Fraud'] = int(prediction)
         formatted_data['ID'] = transaction['transaction_id']
@@ -122,7 +123,7 @@ def main():
         # Store in MongoDB
         collection.insert_one(formatted_data)
 
-        logging.info("Inserted document: " + str(formatted_data))
+        #logging.info("Inserted document: " + str(formatted_data))
 
 
 
