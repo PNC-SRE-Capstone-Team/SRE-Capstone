@@ -59,6 +59,18 @@ Daniel Nelson
 
 ### Ingesting Credit Card Transactions
 
+- Credit card transaction dataset
+  - https://www.kaggle.com/datasets/anurag629/credit-card-fraud-transaction-data/data
+- Recorded information:
+
+```txt
+Transaction ID,Date,Day of Week,Time,Type of Card,Entry Mode,Amount,Type of Transaction,Merchant Group,Country of Transaction,Shipping Address,Country of Residence,Gender,Age,Bank,Fraud
+#3577 209,14-Oct-20,Wednesday,19,Visa,Tap,£5,POS,Entertainment,United Kingdom,United Kingdom,United Kingdom,M,25.2,RBS,0
+
+```
+
+- Python script reads transaction log and feeds data into Apache Kafka
+
 ---
 
 ### Apache Kafka
