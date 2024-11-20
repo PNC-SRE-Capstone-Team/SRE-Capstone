@@ -7,6 +7,12 @@ externalAccess:
         external: 9094
       externalIPs: [10.100.200.32,10.100.200.33,10.100.200.35]
 
+metrics:
+  jmx:
+    enabled: true
+  serviceMonitor:
+    enabled: true
+
 serviceAccount:
   create: true
 rbac:
