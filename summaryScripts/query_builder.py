@@ -1,5 +1,5 @@
-def build_query(entry):
-    if 'Fraud' in entry:
+def build_query(summary):
+    if 'Fraud' in summary:
         query = """
         INSERT INTO transaction_summaries (
             created_at,
@@ -18,16 +18,16 @@ def build_query(entry):
         )"""
 
         data = (
-            entry["Type of Card"], 
-            entry["Entry Mode"], 
-            entry["Average Amount"], 
-            entry["Type of Transaction"], 
-            entry["Merchant Group"], 
-            entry["Country of Transaction"], 
-            entry["Shipping Address"], 
-            entry["Country of Residence"],
-            entry["Bank"],
-            entry["Fraud"]
+            summary["Type of Card"], 
+            summary["Entry Mode"], 
+            summary["Average Amount"], 
+            summary["Type of Transaction"], 
+            summary["Merchant Group"], 
+            summary["Country of Transaction"], 
+            summary["Shipping Address"], 
+            summary["Country of Residence"],
+            summary["Bank"],
+            summary["Fraud"]
             )
     else:
         query = """
@@ -47,15 +47,15 @@ def build_query(entry):
         )"""
 
         data = (
-            entry["Type of Card"], 
-            entry["Entry Mode"], 
-            entry["Average Amount"], 
-            entry["Type of Transaction"], 
-            entry["Merchant Group"], 
-            entry["Country of Transaction"], 
-            entry["Shipping Address"], 
-            entry["Country of Residence"],
-            entry["Bank"]
+            summary["Type of Card"], 
+            summary["Entry Mode"], 
+            summary["Average Amount"], 
+            summary["Type of Transaction"], 
+            summary["Merchant Group"], 
+            summary["Country of Transaction"], 
+            summary["Shipping Address"], 
+            summary["Country of Residence"],
+            summary["Bank"]
             )
 
     return query, data
