@@ -9,11 +9,7 @@ from datetime import datetime
 def preprocess_transaction(data):
     # Filter out unneeded keys
     filtered_data = {key: value for key, value in data.items() if key not in ['transaction_id', 'date', 'fraud']}
-    return filtered_data
 
-
-
-def main():
     # Map old keys to new formatted keys
     key_format_mapping = {
     'day_of_week': 'Day of Week',
@@ -30,6 +26,17 @@ def main():
     'age': 'Age',
     'bank': 'Bank'
     }
+
+    # Apply the new key format
+    formatted_data = {key_format_mapping[key]: value for key, value in features.items()}
+
+
+    return formatted_data
+
+
+
+def main():
+
 
     #init mongo uri
     mongo_uri = os.getenv("MONGO_URI")
@@ -76,23 +83,19 @@ def main():
         features = preprocess_transaction(transaction)
         prediction = model.predict([features])[0]
 
-        # Apply the new key format
-        formatted_data = {key_format_mapping[key]: value for key, value in features.items()}
-
-
-        formatted_data ['Fraud'] = int(prediction)
-        formatted_data ['ID'] = transaction['transaction_id']
+        features['Fraud'] = int(prediction)
+        features['ID'] = transaction['transaction_id']
 
         # Get the current UTC datetime
         current_datetime = datetime.utcnow()
         
-        formatted_data ['Date'] = current_datetime.strftime("%Y-%m-%d")
-        formatted_data ['Time'] = current_datetime.strftime("%H:%M:%S.%f")
+        features['Date'] = current_datetime.strftime("%Y-%m-%d")
+        features['Time'] = current_datetime.strftime("%H:%M:%S.%f")
 
-        logging.info(formatted_data)
+        logging.info(features)
 
         # Store in MongoDB
-        collection.insert_one(formatted_data)
+        collection.insert_one(features)
 
 
 
