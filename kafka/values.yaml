@@ -2,16 +2,16 @@ externalAccess:
   enabled: true
   broker:
     service:
-      type: LoadBalancer
+      type: NodePort
       ports:
         external: 9094
-      loadBalancerIPs: [10.100.200.32, 10.100.200.33, 10.100.200.35]
   controller:
     service:
-      type: LoadBalancer
+      type: NodePort
       containerPorts:
         external: 9094
-      loadBalancerIPs: [10.100.200.32, 10.100.200.33, 10.100.200.35]
+  autoDiscovery:
+    enabled: true
 serviceAccount:
   create: true
 rbac:
