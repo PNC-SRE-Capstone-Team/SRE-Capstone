@@ -14,6 +14,8 @@ mysql_port = os.getenv("MYSQL_PORT")
 mysql_user = os.getenv("MYSQL_USER")
 mysql_pw = os.getenv("MYSQL_PW")
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
 logging.info("Summary Script App Started Successfully!")
 
 # while loop that will only trigger every hour
@@ -39,7 +41,7 @@ while True:
     #summary builder
     docs = collection.find({"Date": date_string, "Time": {"$gte": time_start, "$lt": time_end}})
     if not list(docs):
-        logging.info("No documents found in this time window")
+        logging.warning("No documents found in this time window")
         continue
 
     summaries = summary_builder.build_summaries(docs)
@@ -77,7 +79,7 @@ while True:
         logging.info("INSERT successful")
         
     except mysql.connector.Error as err:
-        logging.info(f"Error: {err}")
+        logging.error(f"Error: {err}")
         sql.rollback()
     
     finally:
