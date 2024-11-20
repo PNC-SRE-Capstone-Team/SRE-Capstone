@@ -2,17 +2,7 @@ import json
 
 def build_summaries(docs):
 
-# total of each card type JSON
-# total of each entry mode JSON
-# average amount float
-# total of each transaction type JSON
-# total country of transaction JSON
-# total shipping address countries  JSON
-# total Country of residence JSON
-# total of each Bank JSON
-# fraud count
-
-    all_entry = {'Type of Card': {},
+    all_transactions = {'Type of Card': {},
                  'Entry Mode': {},
                  'Average Amount': [],
                  'Type of Transaction': {},
@@ -23,7 +13,7 @@ def build_summaries(docs):
                  'Bank': {},
                  'Fraud': 0}
     
-    fraud_entry = {'Type of Card': {},
+    fraud_transactions = {'Type of Card': {},
                  'Entry Mode': {},
                  'Average Amount': [],
                  'Type of Transaction': {},
@@ -36,41 +26,41 @@ def build_summaries(docs):
     for doc in docs:
 
         if doc["Fraud"] == '1':
-             count_data(all_entry, fraud_entry, doc, True)
+             count_data(all_transactions, fraud_transactions, doc, True)
         else:
-             count_data(all_entry, fraud_entry, doc, False)
+             count_data(all_transactions, fraud_transactions, doc, False)
 
     #get average amount
 
-    all_entry['Average Amount'] = get_average_amount(all_entry['Average Amount'])
-    fraud_entry['Average Amount'] = get_average_amount(fraud_entry['Average Amount'])
+    all_transactions['Average Amount'] = get_average_amount(all_transactions['Average Amount'])
+    fraud_transactions['Average Amount'] = get_average_amount(fraud_transactions['Average Amount'])
 
-    jsonify(all_entry, fraud_entry)
+    jsonify(all_transactions, fraud_transactions)
 
-    return [all_entry, fraud_entry]
+    return [all_transactions, fraud_transactions]
 
 
-def count_data(all_entry_dict, fraud_entry_dict, data_dict, is_fraud):
+def count_data(all_transactions_dict, fraud_transactions_dict, data_dict, is_fraud):
     categories = ["Type of Card", "Entry Mode", "Type of Transaction", "Merchant Group", "Country of Transaction", "Shipping Address", "Country of Residence", "Bank"]
 
     for category in categories:
-        if data_dict[category] in all_entry_dict[category]:
-                all_entry_dict[category][data_dict[category]] += 1
+        if data_dict[category] in all_transactions_dict[category]:
+                all_transactions_dict[category][data_dict[category]] += 1
         else:
-            all_entry_dict[category].update({data_dict[category]: 1})
+            all_transactions_dict[category].update({data_dict[category]: 1})
 
         if is_fraud:
-            if data_dict[category] in fraud_entry_dict[category]:
-                fraud_entry_dict[category][data_dict[category]] += 1
+            if data_dict[category] in fraud_transactions_dict[category]:
+                fraud_transactions_dict[category][data_dict[category]] += 1
             else:
-                fraud_entry_dict[category].update({data_dict[category]: 1})
+                fraud_transactions_dict[category].update({data_dict[category]: 1})
                 
 
-    all_entry_dict["Average Amount"].append(data_dict["Amount"])
+    all_transactions_dict["Average Amount"].append(data_dict["Amount"])
 
     if is_fraud:
-        fraud_entry_dict["Average Amount"].append(data_dict["Amount"])
-        all_entry_dict["Fraud"] += 1
+        fraud_transactions_dict["Average Amount"].append(data_dict["Amount"])
+        all_transactions_dict["Fraud"] += 1
 
 def get_average_amount(amounts):
      nums = []

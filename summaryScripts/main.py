@@ -76,10 +76,6 @@ while True:
         cursor.execute(transacton_query, transaction_data)
         cursor.execute(fraud_query, fraud_data)
 
-        res = cursor.fetchall()
-        for row in res:
-            logging.info(row)
-
         sql.commit()
         logging.info("INSERT successful")
         
