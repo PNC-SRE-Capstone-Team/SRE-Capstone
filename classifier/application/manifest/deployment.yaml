@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafkasendlogs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafkasendlogs
+  template:
+    metadata:
+      labels:
+        app: kafkasendlogs
+    spec:
+      containers:
+        - name: kafkasendlogs
+          image: ghcr.io/pnc-sre-capstone-team/kafkasendlogs:latest
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: ghcrcred

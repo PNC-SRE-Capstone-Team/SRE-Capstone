@@ -2,9 +2,19 @@ from confluent_kafka import Consumer
 import joblib
 import json
 from pymongo import MongoClient
+import logging
+import os
+
+#init mongo uri
+mongo_uri = os.getenv("MONGO_URI")
 
 # Load the model
 model = joblib.load('model.joblib')
+
+#Init logs
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
+logging.info("Fraud Detection App Started Successfully!")
 
 # Kafka consumer setup
 consumer = Consumer({
@@ -14,9 +24,9 @@ consumer = Consumer({
 
 consumer.subscribe(['transactions'])
 
-# MongoDB connection, implement auth
-client = MongoClient('mongodb://mongo:27017/')
-db = client.prod
+# MongoDB connection
+client = MongoClient(mongo_uri)
+db = client.test
 collection = db.logs
 
 # Process Kafka messages
@@ -25,15 +35,19 @@ while True:
     if msg is None:
         continue
     if msg.error():
-        print(f"Consumer error: {msg.error()}")
+        print(f"Consumer error: {logging.error(msg.error())}")
         continue
 
+    #Transform the incoming msg into a parsable json
     transaction = json.loads(msg.value().decode('utf-8'))
-    features = preprocess_transaction(transaction)  # Implement this function
-    prediction = model.predict([features])[0]
-    transaction['Fraud'] = int(prediction)
+    logging.info(transaction)
+    #features = preprocess_transaction(transaction)  # Implement this function
+    #prediction = model.predict([features])[0]
+    #transaction['Fraud'] = int(prediction)
+
+    #logging.info(transaction)
 
     # Store in MongoDB
-    collection.insert_one(transaction)
+    #collection.insert_one(transaction)
 
 consumer.close()
