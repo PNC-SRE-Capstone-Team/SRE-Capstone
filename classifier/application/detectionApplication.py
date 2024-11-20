@@ -7,11 +7,49 @@ import os
 from datetime import datetime
 import pandas as pd
 
+#Prometheus libraries
+from prometheus_client import Counter, Gauge, start_http_server
+
+# Create Prometheus metrics
+transaction_counter = Counter(
+    'transactions_total', 'Total number of transactions', ['transaction_type', 'country']
+)
+fraud_counter = Counter(
+    'fraudulent_transactions_total', 'Total number of fraudulent transactions', ['country']
+)
+transaction_amount = Gauge(
+    'transaction_amount', 'Amount of the last transaction', ['transaction_type', 'country']
+)
+
+
 # Load the model
 model = joblib.load('model.joblib')
 
 # Load trained feature names
-trained_columns = joblib.load('trained_columns.joblib')  
+trained_columns = joblib.load('trained_columns.joblib')
+
+
+def process_transaction(transaction):
+    """
+    Process a transaction and update Prometheus metrics.
+    """
+    try:
+        transaction_type = transaction.get('Type of Transaction', 'unknown')
+        country = transaction.get('Country of Transaction', 'unknown')
+        amount = str((transaction.get('Amount', 0))).str.replace('£', '').astype(float)
+        is_fraud = transaction.get('Fraud', 0)
+    except:
+        logging.info("Processing error for prometheus")
+
+    # Increment transaction counter
+    transaction_counter.labels(transaction_type=transaction_type, country=country).inc()
+
+    # Update the transaction amount gauge
+    transaction_amount.labels(transaction_type=transaction_type, country=country).set(amount)
+
+    # Increment fraud counter if the transaction is fraudulent
+    if is_fraud == 1:
+        fraud_counter.labels(country=country).inc()
 
 def preprocess_transaction(data):
 
@@ -41,7 +79,7 @@ def preprocess_transaction(data):
 
 
 def main():
-
+    start_http_server(8000)  # Exposes metrics on http://localhost:8000/metrics
 
     #init mongo uri
     mongo_uri = os.getenv("MONGO_URI")
@@ -126,6 +164,8 @@ def main():
         
         formatted_data['Date'] = current_datetime.strftime("%Y-%m-%d")
         formatted_data['Time'] = current_datetime.strftime("%H:%M:%S.%f")
+
+        process_transaction(formatted_data)
 
         # Store in MongoDB
         collection.insert_one(formatted_data)
