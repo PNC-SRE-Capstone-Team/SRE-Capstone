@@ -14,31 +14,10 @@ model = joblib.load('model.joblib')
 trained_columns = joblib.load('trained_columns.joblib')  
 
 def preprocess_transaction(data):
-    # Filter out unneeded keys
-    filtered_data = {key: value for key, value in data.items() if key not in ['transaction_id', 'date', 'fraud']}
 
-    # Map old keys to new formatted keys
-    key_format_mapping = {
-    'day_of_week': 'Day of Week',
-    'time': 'Time',
-    'card_type': 'Type of Card',
-    'entry_mode': 'Entry Mode',
-    'amount': 'Amount',
-    'transaction_type': 'Type of Transaction',
-    'merchant_group': 'Merchant Group',
-    'transaction_country': 'Country of Transaction',
-    'shipping_address': 'Shipping Address',
-    'residence_country': 'Country of Residence',
-    'gender': 'Gender',
-    'age': 'Age',
-    'bank': 'Bank'
-    }
-
-    # Apply the new key format
-    formatted_data = {key_format_mapping[key]: value for key, value in filtered_data.items()}
     
     # Convert the transaction dictionary to a DataFrame
-    df = pd.DataFrame([formatted_data])
+    df = pd.DataFrame([data])
 
         # Convert numeric fields
     numeric_fields = ['Amount', 'Age', 'Time']  # Specify fields that should be numeric
@@ -101,28 +80,53 @@ def main():
         #Transform the incoming msg into a parsable json
         transaction = json.loads(msg.value().decode('utf-8'))
         logging.info(transaction)
+
+            # Filter out unneeded keys
+        filtered_data = {key: value for key, value in transaction.items() if key not in ['transaction_id', 'date', 'fraud']}
+
+        # Map old keys to new formatted keys
+        key_format_mapping = {
+        'day_of_week': 'Day of Week',
+        'time': 'Time',
+        'card_type': 'Type of Card',
+        'entry_mode': 'Entry Mode',
+        'amount': 'Amount',
+        'transaction_type': 'Type of Transaction',
+        'merchant_group': 'Merchant Group',
+        'transaction_country': 'Country of Transaction',
+        'shipping_address': 'Shipping Address',
+        'residence_country': 'Country of Residence',
+        'gender': 'Gender',
+        'age': 'Age',
+        'bank': 'Bank'
+        }
+
+        # Apply the new key format
+        formatted_data = {key_format_mapping[key]: value for key, value in filtered_data.items()}
         
         #transactionDict = json.loads(transaction)
         #process and predict fraud
-        features = preprocess_transaction(transaction)
+        features = preprocess_transaction(formatted_data)
         try:
             prediction = model.predict([features])[0]
         except:
             logging.warning("prediction failure")
 
-        features['Fraud'] = int(prediction)
-        features['ID'] = transaction['transaction_id']
+        formatted_data['Fraud'] = int(prediction)
+        formatted_data['ID'] = transaction['transaction_id']
+
+        formatted_data['Amount'] = "€{:.0f}".format(formatted_data['Amount'])
 
         # Get the current UTC datetime
         current_datetime = datetime.utcnow()
         
-        features['Date'] = current_datetime.strftime("%Y-%m-%d")
-        features['Time'] = current_datetime.strftime("%H:%M:%S.%f")
+        formatted_data['Date'] = current_datetime.strftime("%Y-%m-%d")
+        formatted_data['Time'] = current_datetime.strftime("%H:%M:%S.%f")
 
         # Store in MongoDB
-        collection.insert_one(features)
+        collection.insert_one(formatted_data)
 
-        logging.info("Inserted document: " + features)
+        logging.info("Inserted document: " + formatted_data)
 
 
 
