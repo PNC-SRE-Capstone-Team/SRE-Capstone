@@ -57,7 +57,7 @@ def preprocess_transaction(data):
     # Convert the processed row back to a dictionary
     processed_data = df.iloc[0]
 
-    logging.info("processed data:" + processed_data)  # Return as a NumPy array (1D)
+    logging.info("processed data:" + str(processed_data))  # Return as a NumPy array (1D)
 
     return processed_data # Return as a NumPy array (1D)
 
