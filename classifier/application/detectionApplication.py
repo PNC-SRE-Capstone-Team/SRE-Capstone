@@ -79,6 +79,9 @@ def main():
         transaction = json.loads(msg.value().decode('utf-8'))
         logging.info(transaction)
 
+        if transaction['amount'] == '':
+            transaction['amount'] = '£1'
+
             # Filter out unneeded keys
         filtered_data = {key: value for key, value in transaction.items() if key not in ['transaction_id', 'date', 'fraud']}
 
@@ -99,8 +102,12 @@ def main():
         'bank': 'Bank'
         }
 
-        # Apply the new key format
-        formatted_data = {key_format_mapping[key]: value for key, value in filtered_data.items()}
+        try:
+            # Apply the new key format
+            formatted_data = {key_format_mapping[key]: value for key, value in filtered_data.items()}
+        except:
+            logging.warning("Couldn't format data")
+            continue
         
         #transactionDict = json.loads(transaction)
         #process and predict fraud
