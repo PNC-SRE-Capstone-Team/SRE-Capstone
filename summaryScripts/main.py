@@ -40,11 +40,13 @@ while True:
     collection = mongo_db["logs"]
 
     #summary builder
-    docs = collection.find({"Date": date_string, "Time": {"$gte": time_start, "$lt": time_end}})
-    if not docs.alive:
+    find_query = {"Date": date_string, "Time": {"$gte": time_start, "$lt": time_end}}
+    count = collection.count_documents(find_query)
+    if count == 0:
         logging.warning("No documents found in this time window")
         continue
-
+    
+    docs = collection.find(find_query)
     summaries = summary_builder.build_summaries(docs)
 
     #establish connection and cursor
