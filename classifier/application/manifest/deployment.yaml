@@ -21,6 +21,5 @@ spec:
           env:
             - name: METRICS_PORT
               value: "8000"
-
       imagePullSecrets:
         - name: ghcrcred

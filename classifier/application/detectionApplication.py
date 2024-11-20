@@ -83,7 +83,7 @@ def preprocess_transaction(data):
 
 
 def main():
-    start_http_server(8000)  # Exposes metrics on http://localhost:8000/metrics
+    start_http_server(8000, addr="0.0.0.0")  # Exposes metrics on http://localhost:8000/metrics
 
     #init mongo uri
     mongo_uri = os.getenv("MONGO_URI")
@@ -119,7 +119,7 @@ def main():
 
         #Transform the incoming msg into a parsable json
         transaction = json.loads(msg.value().decode('utf-8'))
-        logging.info(transaction)
+        #logging.info(transaction)
 
         if transaction['amount'] == '':
             transaction['amount'] = '£1'
@@ -164,7 +164,7 @@ def main():
         formatted_data['ID'] = transaction['transaction_id']
 
         # Get the current UTC datetime
-        current_datetime = datetime.utcnow()
+        current_datetime = datetime.now(datetime.timezone.utc)
         
         formatted_data['Date'] = current_datetime.strftime("%Y-%m-%d")
         formatted_data['Time'] = current_datetime.strftime("%H:%M:%S.%f")
