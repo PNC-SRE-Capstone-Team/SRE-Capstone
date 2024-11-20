@@ -26,6 +26,12 @@ broker:
 listeners:
   client:
     protocol: PLAINTEXT
+  controller:
+    protocol: PLAINTEXT
+  interbroker:
+    protocol: PLAINTEXT
+  external:
+    protocol: PLAINTEXT
 
 auth:
   interBrokerProtocol: plaintext
