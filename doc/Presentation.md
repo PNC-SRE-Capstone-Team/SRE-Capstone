@@ -39,6 +39,10 @@ Daniel Nelson
 
 ---
 
+### Docker and Kubernetes
+
+---
+
 ### CI/CD
 
 - K3s kubernetes cluster managed by ArgoCD
@@ -46,3 +50,40 @@ Daniel Nelson
 - GitHub Action workflows deploy  Kubernetes objects defined in git repository
 - Build artifacts pushed to private container registry
 - Secrets managed as GitHub secrets to avoid unwanted exposure of sensitive data
+
+---
+
+### Ingesting Credit Card Transactions
+
+---
+
+### Apache Kafka
+
+---
+
+### Fraud Classification
+
+---
+
+### MongoDB
+
+---
+
+### Summary Scripts
+
+---
+
+### MariaDB (MySQL)
+
+---
+
+### Monitoring and Dashboards
+
+---
+
+<!-- Repeat this slide at the end after going through each component. -->
+![Architecture Diagram](./assets/architecture_diagram.png)
+
+---
+
+### Questions?
