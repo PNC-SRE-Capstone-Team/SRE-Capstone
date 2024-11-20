@@ -22,6 +22,12 @@ metrics:
         name: kafka-jmx-config
   serviceMonitor:
     enabled: true
+    namespace: kafka
+    interval: 60
+    scrapeTimeout: 300
+  prometheusRule:
+    enabled: true
+    namespace: monitoring
 
 serviceAccount:
   create: true
