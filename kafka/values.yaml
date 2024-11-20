@@ -10,6 +10,16 @@ externalAccess:
 metrics:
   jmx:
     enabled: true
+    config:
+      enabled: true
+      image:
+        registry: docker.io
+        repository: bitnami/jmx-exporter
+        tag: latest
+      port: 5556
+      configMap:
+        enabled: true
+        name: kafka-jmx-config
   serviceMonitor:
     enabled: true
 
