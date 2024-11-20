@@ -43,8 +43,6 @@ def main():
             print(f"Consumer error: {logging.error(msg.error())}")
             continue
 
-        logging.info()
-
         #Transform the incoming msg into a parsable json
         transaction = json.loads(msg.value().decode('utf-8'))
         logging.info(transaction)
