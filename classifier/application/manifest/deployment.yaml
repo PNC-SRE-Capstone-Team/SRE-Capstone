@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frauddetection
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frauddetection
+  template:
+    metadata:
+      labels:
+        app: frauddetection
+    spec:
+      containers:
+        - name: frauddetection
+          image: ghcr.io/pnc-sre-capstone-team/frauddetection:latest
+          imagePullPolicy: Always
+      imagePullSecrets:
+        - name: ghcrcred

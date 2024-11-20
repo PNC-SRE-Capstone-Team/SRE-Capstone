@@ -4,7 +4,7 @@ name: deploy-kafka
 on:
   # Triggers the workflow on push or pull request events
   push:
-    branches: ["main", "kafka"]
+    branches: ["main", "kafka", "classifier"]
     paths:
       - kafka/**
       - .github/workflows/deploy-kafka.yml

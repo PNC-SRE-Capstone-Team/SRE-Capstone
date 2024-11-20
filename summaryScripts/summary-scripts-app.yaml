@@ -4,17 +4,20 @@ kind: Application
 metadata:
   name: summaryscripts
   namespace: argocd
+
 spec:
   project: default
   source:
     #values from git
     repoURL: "https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone"
     targetRevision: main
+
     path: summaryScripts/manifest
 
   destination:
     server: https://kubernetes.default.svc
     namespace: database
+
   syncPolicy:
     automated:
       prune: true
