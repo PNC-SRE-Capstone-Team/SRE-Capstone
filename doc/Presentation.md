@@ -36,3 +36,13 @@ Daniel Nelson
 - HPE ProLiant DL380 Gen9 Server
 - Virtual machines provisioned with Terraform
 - Kubernetes cluster configured with Ansible
+
+---
+
+### CI/CD
+
+- K3s kubernetes cluster managed by ArgoCD
+- Component services are defined as Dockerfiles and Kubernetes manifests
+- GitHub Action workflows deploy  Kubernetes objects defined in git repository
+- Build artifacts pushed to private container registry
+- Secrets managed as GitHub secrets to avoid unwanted exposure of sensitive data
