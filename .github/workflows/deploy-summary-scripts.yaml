@@ -24,7 +24,7 @@ env:
     MYSQL_PORT: '${{ secrets.MARIADB_PORT }}'
 
 jobs:
-  build_and_deploy_kafkaSendLogs:
+  build_and_deploy_summaryscripts
     runs-on: self-hosted
     steps:
       - name: Clean up
@@ -45,4 +45,4 @@ jobs:
       - name: Deploy with ArgoCD CLI
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
-          argocd app create -f summaryScripts/summary-scripts-app.yml --upsert
+          argocd app create -f summaryScripts/summary-scripts-app.yaml --upsert
