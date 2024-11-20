@@ -13,6 +13,7 @@ mysql_port = os.getenv("MYSQL_PORT")
 mysql_user = os.getenv("MYSQL_USER")
 mysql_pw = os.getenv("MYSQL_PW")
 
+print("Summary Script App Started Successfully!")
 
 # while loop that will only trigger every hour
 while True:
@@ -29,6 +30,7 @@ while True:
     next_task = (now + timedelta(minutes=5))
     sleep_time = (next_task - now).total_seconds()
 
+    print("Starting 5 minute sleep cycle")
     time.sleep(sleep_time)
 
     #establish mongo connection
