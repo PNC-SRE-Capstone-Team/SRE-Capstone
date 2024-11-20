@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kafka
+  namespace: argocd
+spec:
+  project: default
+  sources:
+    - chart: kafka
+      repoURL: https://charts.bitnami.com/bitnami
+      targetRevision: 31.0.0
+      helm:
+        valueFiles:
+          - $values/kafka/values.yaml # Ensure this path exists in the repo
+
+    # External values from Git
+
+    - repoURL: "https://github.com/PNC-SRE-Capstone-Team/SRE-Capstone"
+      targetRevision: main
+      ref: values
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: kafka
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: 2
+    backoff:
+      duration: 5s
+      maxDuration: 3m0s
+      factor: 2

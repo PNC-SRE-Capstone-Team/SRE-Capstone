@@ -1,0 +1,38 @@
+externalAccess:
+  enabled: true
+  broker:
+    service:
+      type: LoadBalancer
+      ports:
+        external: 9094
+  controller:
+    service:
+      type: LoadBalancer
+      containerPorts:
+        external: 9094
+  autoDiscovery:
+    enabled: true
+serviceAccount:
+  create: true
+rbac:
+  create: true
+controller:
+  automountServiceAccountToken: true
+  replicaCount: 1
+broker:
+  automountServiceAccountToken: true
+  pdb:
+    create: false
+listeners:
+  client:
+    protocol: PLAINTEXT
+  controller:
+    protocol: PLAINTEXT
+  interbroker:
+    protocol: PLAINTEXT
+  external:
+    protocol: PLAINTEXT
+
+auth:
+  interBrokerProtocol: plaintext
+  clientProtocol: plaintext
