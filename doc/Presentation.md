@@ -28,3 +28,11 @@ Daniel Nelson
 
 ![Architecture Diagram](./assets/architecture_diagram.png)
 
+---
+
+### Computing Infrastructure
+
+- Running on self-hosted Proxmox server
+- HPE ProLiant DL380 Gen9 Server
+- Virtual machines provisioned with Terraform
+- Kubernetes cluster configured with Ansible
