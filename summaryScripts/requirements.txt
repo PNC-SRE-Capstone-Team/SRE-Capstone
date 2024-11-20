@@ -1,0 +1,6 @@
+dnspython==2.7.0
+marshmallow==3.23.1
+mysql-connector-python==9.1.0
+packaging==24.2
+pymongo==4.10.1
+python-dotenv==1.0.1

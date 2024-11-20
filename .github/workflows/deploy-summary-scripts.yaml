@@ -1,0 +1,48 @@
+name: deploy-summary-scripts
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events
+  push:
+    branches: ["main", "summary-scripts"]
+    paths:
+      - summaryScripts/**
+      - .github/workflows/deploy-summary-scripts.yaml
+  pull_request:
+    branches: ["main"]
+    paths:
+      - summaryScripts/**
+      - .github/workflows/deploy-summary-scripts.yaml
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+env:
+    MONGO_URI: '${{ secrets.MONGO_URI }}'
+    MYSQL_USER: '${{ secrets.MARIADB_USERNAME}}'
+    MYSQL_PW: '${{ secrets.MARIADB_PASSWORD }}'
+    MYSQL_PORT: '${{ secrets.MARIADB_PORT }}'
+
+jobs:
+  build_and_deploy_summaryscripts:
+    runs-on: self-hosted
+    steps:
+      - name: Clean up
+        run: |
+          sudo rm -rf /home/op/actions-runner/_work/SRE-Capstone/SRE-Capstone/*
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          clean: false
+
+      - name: Build the image
+        run: |
+          cd ./summaryScripts
+          sudo docker login --username ${{ secrets.CONTAINER_REGISTRY_USERNAME }} --password ${{ secrets.CONTAINER_REGISTRY_TOKEN }} ghcr.io
+          sudo docker build --build-arg MONGO_URI=$MONGO_URI --build-arg MYSQL_USER=$MYSQL_USER --build-arg MYSQL_PW=$MYSQL_PW --build-arg MYSQL_PORT=$MYSQL_PORT -t ghcr.io/pnc-sre-capstone-team/summaryscriptsapp:latest .
+          sudo docker push ghcr.io/pnc-sre-capstone-team/summaryscriptsapp:latest
+      - name: Deploy with ArgoCD CLI
+        run: |
+          argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
+          argocd app create -f summaryScripts/summary-scripts-app.yaml --upsert
