@@ -40,8 +40,8 @@ jobs:
         run: |
           cd ./summaryScripts
           sudo docker login --username ${{ secrets.CONTAINER_REGISTRY_USERNAME }} --password ${{ secrets.CONTAINER_REGISTRY_TOKEN }} ghcr.io
-          sudo docker build --build-arg MONGO_URI=$MONGO_URI --build-arg MYSQL_USER=$MYSQL_USER --build-arg MYSQL_PW=$MYSQL_PW --build-arg MYSQL_PORT=$MYSQL_PORT -t ghcr.io/pnc-sre-capstone-team/summaryScriptsApp:latest .
-          sudo docker push ghcr.io/pnc-sre-capstone-team/summaryScriptsApp:latest
+          sudo docker build --build-arg MONGO_URI=$MONGO_URI --build-arg MYSQL_USER=$MYSQL_USER --build-arg MYSQL_PW=$MYSQL_PW --build-arg MYSQL_PORT=$MYSQL_PORT -t ghcr.io/pnc-sre-capstone-team/summaryscriptsapp:latest .
+          sudo docker push ghcr.io/pnc-sre-capstone-team/summaryscriptsapp:latest
       - name: Deploy with ArgoCD CLI
         run: |
           argocd login ${{ secrets.ARGOCD_SERVER }} --username admin --password ${{ secrets.ARGOCD_PASSWORD }} --insecure
