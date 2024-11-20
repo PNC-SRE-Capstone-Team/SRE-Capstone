@@ -2,14 +2,16 @@ externalAccess:
   enabled: true
   broker:
     service:
-      type: ClusterIP
+      type: LoadBalancer
       ports:
         external: 9094
+      loadBalancerIPs: [10.100.200.32, 10.100.200.33, 10.100.200.35]
   controller:
     service:
-      type: ClusterIP
+      type: LoadBalancer
       containerPorts:
         external: 9094
+      loadBalancerIPs: [10.100.200.32, 10.100.200.33, 10.100.200.35]
   autoDiscovery:
     enabled: true
 serviceAccount:
