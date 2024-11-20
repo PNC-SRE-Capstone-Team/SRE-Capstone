@@ -21,7 +21,7 @@ Daniel Nelson
 - Using sound engineering practices:
   - Implement using infrastructure as code (IaC)
   - Automated deployment and CI/CD
-  - Horizontally scalable architecture
+  - Horizontally scalable architecture (microservices)
   - Instrumented and monitored
 
 ---
@@ -40,6 +40,10 @@ Daniel Nelson
 ---
 
 ### Docker and Kubernetes
+
+- Docker is a container engine for developing, shipping, and running applications
+  - More lightweight than virtual machines
+- Kubernetes is a container orchestration platform for managing a computing cluster made up of many containerized services
 
 ---
 
