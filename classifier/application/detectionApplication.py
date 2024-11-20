@@ -4,7 +4,7 @@ import json
 from pymongo import MongoClient
 import logging
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 import pandas as pd
 
 #Prometheus libraries
