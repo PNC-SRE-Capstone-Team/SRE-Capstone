@@ -55,7 +55,9 @@ def main():
         # Store in MongoDB
         #collection.insert_one(transaction)
 
-        consumer.close()
+
+
+    consumer.close()
 
 
 if __name__ == "__main__":
