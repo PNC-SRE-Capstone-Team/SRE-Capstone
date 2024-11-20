@@ -1,5 +1,7 @@
 # SRE-Capstone
 
+Alex Griffin, Balin Warren, Chadon Mathurin, Daniel Nelson
+
 ## Proposal
 
 ### Goals and Objectives
