@@ -67,7 +67,7 @@ def main():
 
 
     #init mongo uri
-    #mongo_uri = os.getenv("MONGO_URI")
+    mongo_uri = os.getenv("MONGO_URI")
 
     #Init logs
     logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
