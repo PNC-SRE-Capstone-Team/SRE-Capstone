@@ -36,8 +36,6 @@ def preprocess_transaction(data):
     # Convert the processed row back to a dictionary
     processed_data = df.iloc[0]
 
-    logging.info("processed data:" + str(processed_data))  # Return as a NumPy array (1D)
-
     return processed_data # Return as a NumPy array (1D)
 
 
@@ -115,7 +113,7 @@ def main():
         formatted_data['Fraud'] = int(prediction)
         formatted_data['ID'] = transaction['transaction_id']
 
-        formatted_data['Amount'] = "€{:.0f}".format(formatted_data['Amount'])
+        formatted_data['Amount'] = "€" + formatted_data['Amount']
 
         # Get the current UTC datetime
         current_datetime = datetime.utcnow()
