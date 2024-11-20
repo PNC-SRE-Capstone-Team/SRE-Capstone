@@ -164,7 +164,7 @@ def main():
         formatted_data['ID'] = transaction['transaction_id']
 
         # Get the current UTC datetime
-        current_datetime = datetime.now(datetime.timezone.utc)
+        current_datetime = datetime.now(timezone.utc)
         
         formatted_data['Date'] = current_datetime.strftime("%Y-%m-%d")
         formatted_data['Time'] = current_datetime.strftime("%H:%M:%S.%f")
