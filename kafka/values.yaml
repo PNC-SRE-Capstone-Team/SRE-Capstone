@@ -1,10 +1,5 @@
 externalAccess:
   enabled: true
-  broker:
-    service:
-      type: NodePort
-      ports:
-        external: 9094
   controller:
     service:
       type: NodePort
