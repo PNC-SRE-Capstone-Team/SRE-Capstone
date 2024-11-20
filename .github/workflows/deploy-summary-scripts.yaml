@@ -24,7 +24,7 @@ env:
     MYSQL_PORT: '${{ secrets.MARIADB_PORT }}'
 
 jobs:
-  build_and_deploy_summaryscripts
+  build_and_deploy_summaryscripts:
     runs-on: self-hosted
     steps:
       - name: Clean up
