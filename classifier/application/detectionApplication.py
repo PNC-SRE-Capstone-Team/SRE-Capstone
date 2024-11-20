@@ -113,8 +113,6 @@ def main():
         formatted_data['Fraud'] = int(prediction)
         formatted_data['ID'] = transaction['transaction_id']
 
-        formatted_data['Amount'] = "€" + formatted_data['Amount']
-
         # Get the current UTC datetime
         current_datetime = datetime.utcnow()
         
