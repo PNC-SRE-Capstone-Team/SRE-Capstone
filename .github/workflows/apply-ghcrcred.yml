@@ -4,23 +4,26 @@ name: apply-ghcrcred
 on:
   # Triggers the workflow on push or pull request events
   push:
-    branches: ["main", "kafka"]
+    branches: ["main"]
     paths:
-      - kafkaSendLogs/**
-      - .github/workflows/apply-ghcrcred-kafka.yml
+      - .github/workflows/apply-ghcrcred.yml
   pull_request:
     branches: ["main"]
     paths:
-      - kafkaSendLogs/**
-      - .github/workflows/apply-ghcrcred-kafka.yml
+      - .github/workflows/apply-ghcrcred.yml
 
 jobs:
   apply-ghcrcred-secret:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
-      - name: Apply private container registry secret
+      - name: Apply private container registry secret to kafka namespace
         run: |
           echo "${{ secrets.CONTAINER_REGISTRY_CRED_KAFKA_NS }}" | base64 --decode - > ghcrcredSecret.yml
+          sudo kubectl apply -f ghcrcredSecret.yml
+          rm ghcrcredSecret.yml  # Clean up after applying
+      - name: Apply private container registry secret to database namespace
+        run: |
+          echo "${{ secrets.CONTAINER_REGISTRY_CRED_DATABASE_NS }}" | base64 --decode - > ghcrcredSecret.yml
           sudo kubectl apply -f ghcrcredSecret.yml
           rm ghcrcredSecret.yml  # Clean up after applying

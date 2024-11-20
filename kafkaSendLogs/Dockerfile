@@ -1,9 +1,15 @@
 FROM python:3.11.10-slim-bookworm
 
-RUN pip install confluent-kafka==2.3.0
+# Set the working directory inside the container
+WORKDIR /app
 
-COPY kafkaSendLogs.py /
-COPY CreditCardData.csv /
+# Copy the application code into the container
+COPY kafkaSendLogs.py .
+COPY requirements.txt .
+COPY CreditCardData.csv .
+
+# Install Python dependencies
+RUN pip install -r requirements.txt
 
 ENTRYPOINT ["/usr/local/bin/python3", "kafkaSendLogs.py"]
 CMD ["CreditCardData.csv", "transactions"]
