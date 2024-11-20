@@ -124,7 +124,7 @@ def main():
         # Store in MongoDB
         collection.insert_one(formatted_data)
 
-        logging.info("Inserted document: " + formatted_data)
+        logging.info("Inserted document: " + str(formatted_data))
 
 
 
