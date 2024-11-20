@@ -7,28 +7,6 @@ externalAccess:
         external: 9094
       externalIPs: [10.100.200.32,10.100.200.33,10.100.200.35]
 
-metrics:
-  jmx:
-    enabled: true
-    config:
-      enabled: true
-      image:
-        registry: docker.io
-        repository: bitnami/jmx-exporter
-        tag: latest
-      port: 5556
-      configMap:
-        enabled: true
-        name: kafka-jmx-config
-  serviceMonitor:
-    enabled: true
-    namespace: kafka
-    interval: 60
-    scrapeTimeout: 300
-  prometheusRule:
-    enabled: true
-    namespace: monitoring
-
 serviceAccount:
   create: true
 rbac:
