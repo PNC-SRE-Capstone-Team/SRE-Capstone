@@ -45,6 +45,7 @@ while True:
     if count == 0:
         logging.warning("No documents found in this time window")
         logging.info("Starting 5 minute sleep cycle")
+        time.sleep(sleep_time)
         continue
     
     docs = collection.find(find_query)
