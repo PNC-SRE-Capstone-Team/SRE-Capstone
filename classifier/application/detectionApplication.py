@@ -4,6 +4,14 @@ import json
 from pymongo import MongoClient
 import logging
 import os
+from datetime import datetime
+
+def preprocess_transaction(data):
+    # Filter out unneeded keys
+    filtered_data = {key: value for key, value in formatted_data.items() if key not in ['transaction_id', 'date', 'fraud']}
+    return filtered_data
+
+
 
 def main():
     #init mongo uri
@@ -46,14 +54,45 @@ def main():
         #Transform the incoming msg into a parsable json
         transaction = json.loads(msg.value().decode('utf-8'))
         logging.info(transaction)
-        #features = preprocess_transaction(transaction)  # Implement this function
-        #prediction = model.predict([features])[0]
-        #transaction['Fraud'] = int(prediction)
 
-        #logging.info(transaction)
+        #process and predict fraud
+        features = preprocess_transaction(transaction)
+        prediction = model.predict([features])[0]
+
+        # Map old keys to new formatted keys
+        key_format_mapping = {
+        'day_of_week': 'Day of Week',
+        'time': 'Time',
+        'card_type': 'Type of Card',
+        'entry_mode': 'Entry Mode',
+        'amount': 'Amount',
+        'transaction_type': 'Type of Transaction',
+        'merchant_group': 'Merchant Group',
+        'transaction_country': 'Country of Transaction',
+        'shipping_address': 'Shipping Address',
+        'residence_country': 'Country of Residence',
+        'gender': 'Gender',
+        'age': 'Age',
+        'bank': 'Bank'
+        }
+
+        # Apply the new key format
+        formatted_data = {key_format_mapping[key]: value for key, value in features.items()}
+
+
+        features['Fraud'] = int(prediction)
+        features['ID'] = transaction['transaction_id']
+
+        # Get the current UTC datetime
+        current_datetime = datetime.utcnow()
+        
+        features['Date'] = current_datetime.strftime("%Y-%m-%d")
+        features['Time'] = current_datetime.strftime("%H:%M:%S.%f")
+
+        logging.info(features)
 
         # Store in MongoDB
-        #collection.insert_one(transaction)
+        collection.insert_one(features)
 
 
 
