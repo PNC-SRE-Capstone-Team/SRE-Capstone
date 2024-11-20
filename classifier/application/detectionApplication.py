@@ -19,7 +19,7 @@ def main():
 
     # Kafka consumer setup
     consumer = Consumer({
-    'bootstrap.servers': 'kafka-controller-headless.kafka.svc.cluster.local:9093',
+    'bootstrap.servers': 'kafka-controller-headless.kafka.svc.cluster.local:9095',
     'group.id': 'fraud-detector',
     'auto.offset.reset': 'earliest'
     })
