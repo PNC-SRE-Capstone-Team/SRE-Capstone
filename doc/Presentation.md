@@ -28,16 +28,3 @@ Daniel Nelson
 
 ![Architecture Diagram](./assets/architecture_diagram.png)
 
-### Tools and Technologies Used
-
-- Apache Kafka
-- MongoDB
-- MariaDB (MySQL)
-- Prometheus
-- Grafana
-- Kubernetes
-- Docker
-- Python
-- Github Actions
-- ArgoCD
-- Github
