@@ -36,20 +36,24 @@ def process_transaction(transaction):
     try:
         transaction_type = transaction.get('Type of Transaction', 'unknown')
         country = transaction.get('Country of Transaction', 'unknown')
-        amount = str((transaction.get('Amount', 0))).str.replace('£', '').astype(float)
+        amount_str = str(transaction.get('Amount', 0))
+        amount = float(amount_str.replace('£', '').replace('€', '').strip())
         is_fraud = transaction.get('Fraud', 0)
+
+        # Increment transaction counter
+        transaction_counter.labels(transaction_type=transaction_type, country=country).inc()
+
+        # Update the transaction amount gauge
+        transaction_amount.labels(transaction_type=transaction_type, country=country).set(amount)
+
+        # Increment fraud counter if the transaction is fraudulent
+        if is_fraud == 1:
+            fraud_counter.labels(country=country).inc()
+
     except:
         logging.info("Processing error for prometheus")
 
-    # Increment transaction counter
-    transaction_counter.labels(transaction_type=transaction_type, country=country).inc()
 
-    # Update the transaction amount gauge
-    transaction_amount.labels(transaction_type=transaction_type, country=country).set(amount)
-
-    # Increment fraud counter if the transaction is fraudulent
-    if is_fraud == 1:
-        fraud_counter.labels(country=country).inc()
 
 def preprocess_transaction(data):
 
