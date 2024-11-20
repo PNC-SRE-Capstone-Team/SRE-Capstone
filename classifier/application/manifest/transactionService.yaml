@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: transaction-metrics-service
   labels:
-    app: transaction-metrics
+    app: frauddetection
 spec:
   selector:
-    app: transaction-metrics
+    app: frauddetection
   ports:
     - protocol: TCP
       port: 8000
