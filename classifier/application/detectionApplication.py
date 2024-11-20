@@ -19,12 +19,12 @@ def main():
 
     # Kafka consumer setup
     consumer = Consumer({
-    'bootstrap.servers': '10.100.200.23:9094',
+    'bootstrap.servers': 'kafka-controller-headless.kafka.svc.cluster.local:9092',
     'group.id': 'fraud-detector',
     'auto.offset.reset': 'earliest'
     })
 
-
+    logging.info(consumer)
 
     # MongoDB connection
     client = MongoClient(mongo_uri)
