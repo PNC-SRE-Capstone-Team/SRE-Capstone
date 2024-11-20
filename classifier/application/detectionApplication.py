@@ -36,6 +36,7 @@ def main():
         consumer.subscribe(['transactions'])
         logging.info("loop")
         msg = consumer.poll(1.0)
+        logging.info(msg)
         if msg is None:
             continue
         if msg.error():
