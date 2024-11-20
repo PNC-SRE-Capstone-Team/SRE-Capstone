@@ -2,12 +2,12 @@ externalAccess:
   enabled: true
   broker:
     service:
-      type: NodePort
+      type: LoadBalancer
       ports:
         external: 9094
   controller:
     service:
-      type: NodePort
+      type: LoadBalancer
       containerPorts:
         external: 9094
   autoDiscovery:
@@ -18,7 +18,7 @@ rbac:
   create: true
 controller:
   automountServiceAccountToken: true
-  replicaCount: 3
+  replicaCount: 1
 broker:
   automountServiceAccountToken: true
   pdb:
