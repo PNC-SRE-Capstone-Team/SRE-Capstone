@@ -23,7 +23,7 @@ consumer = Consumer({
     'auto.offset.reset': 'earliest'
 })
 
-consumer.subscribe(['transactions'])
+
 
 # MongoDB connection
 client = MongoClient(mongo_uri)
@@ -32,6 +32,7 @@ collection = db.logs
 
 # Process Kafka messages
 while True:
+    consumer.subscribe(['transactions'])
     msg = consumer.poll(1.0)
     if msg is None:
         continue
@@ -51,4 +52,6 @@ while True:
     # Store in MongoDB
     #collection.insert_one(transaction)
 
-consumer.close()
+    consumer.close()
+
+
