@@ -52,7 +52,7 @@ while True:
 
     #establish connection and cursor
     sql = mysql.connector.connect(
-        host="mariadb-headless.database.svc.cluster.local",
+        host="mariadb.database.svc.cluster.local",
         user=mysql_user,
         password=mysql_pw,
         port=mysql_port,
