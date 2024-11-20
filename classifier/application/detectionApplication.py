@@ -57,7 +57,7 @@ def preprocess_transaction(data):
     # Convert the processed row back to a dictionary
     processed_data = df.iloc[0]
 
-    #print(processed_data)  # Return as a NumPy array (1D)
+    logging.info("processed data:" + processed_data)  # Return as a NumPy array (1D)
 
     return processed_data # Return as a NumPy array (1D)
 
@@ -91,9 +91,7 @@ def main():
     # Process Kafka messages
     while True:
         consumer.subscribe(['transactions'])
-        logging.info("loop")
         msg = consumer.poll(1.0)
-        logging.info(msg)
         if msg is None:
             continue
         if msg.error():
