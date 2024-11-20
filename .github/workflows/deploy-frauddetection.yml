@@ -17,6 +17,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+    MONGO_URI: '${{ secrets.MONGO_URI }}'
+
 jobs:
   build_and_deploy_frauddetection:
     runs-on: self-hosted
@@ -34,7 +37,7 @@ jobs:
         run: |
           cd ./classifier/application
           sudo docker login --username ${{ secrets.CONTAINER_REGISTRY_USERNAME }} --password ${{ secrets.CONTAINER_REGISTRY_TOKEN }} ghcr.io
-          sudo docker build . -t ghcr.io/pnc-sre-capstone-team/frauddetection:latest
+          sudo docker build --build-arg MONGO_URI=$MONGO_URI . -t ghcr.io/pnc-sre-capstone-team/frauddetection:latest
           sudo docker push ghcr.io/pnc-sre-capstone-team/frauddetection:latest
             
       - name: Deploy with ArgoCD CLI
