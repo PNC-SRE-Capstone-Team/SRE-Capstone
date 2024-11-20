@@ -5,6 +5,7 @@ import time
 from datetime import datetime, timedelta, timezone
 import summary_builder
 import query_builder
+import logging
 
 #init env
 mongo_uri = os.getenv("MONGO_URI")
@@ -13,7 +14,7 @@ mysql_port = os.getenv("MYSQL_PORT")
 mysql_user = os.getenv("MYSQL_USER")
 mysql_pw = os.getenv("MYSQL_PW")
 
-print("Summary Script App Started Successfully!")
+logging.info("Summary Script App Started Successfully!")
 
 # while loop that will only trigger every hour
 while True:
@@ -30,7 +31,7 @@ while True:
     next_task = (now + timedelta(minutes=5))
     sleep_time = (next_task - now).total_seconds()
 
-    print("Starting 5 minute sleep cycle")
+    logging.info("Starting 5 minute sleep cycle")
     time.sleep(sleep_time)
 
     #establish mongo connection
@@ -41,7 +42,7 @@ while True:
     #summary builder
     docs = collection.find({"Date": date_string, "Time": {"$gte": time_start, "$lt": time_end}})
     if not list(docs):
-        print("No documents found in this time window")
+        logging.info("No documents found in this time window")
         continue
 
     summaries = summary_builder.build_summaries(docs)
@@ -57,7 +58,7 @@ while True:
     )
 
     if sql.is_connected():
-        print("Connected to MySQL")
+        logging.info("Connected to MySQL")
 
     cursor = sql.cursor()
 
@@ -73,13 +74,13 @@ while True:
 
         res = cursor.fetchall()
         for row in res:
-            print(row)
+            logging.info(row)
 
         sql.commit()
-        print("INSERT successful")
+        logging.info("INSERT successful")
         
     except mysql.connector.Error as err:
-        print(f"Error: {err}")
+        logging.info(f"Error: {err}")
         sql.rollback()
     
     finally:
@@ -87,5 +88,5 @@ while True:
         sql.close()
         mongo.close()
 
-    print("Executed at: " + str(datetime.now()))
+    logging.info("Executed at: " + str(datetime.now()))
 
