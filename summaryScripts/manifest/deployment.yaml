@@ -2,19 +2,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: summaryScripts
+  name: summaryscripts
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: summaryScripts
+      app: summaryscripts
   template:
     metadata:
       labels:
-        app: summaryScripts
+        app: summaryscripts
     spec:
       containers:
-        - name: summaryScripts
+        - name: summaryscripts
           image: ghcr.io/pnc-sre-capstone-teams/sre-capstone/summaryscriptsapp:latest
           imagePullPolicy: Always
       imagePullSecrets:
