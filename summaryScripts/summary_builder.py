@@ -25,7 +25,7 @@ def build_summaries(docs):
     
     for doc in docs:
 
-        if doc["Fraud"] == '1':
+        if doc["Fraud"] == 1:
              count_data(all_transactions, fraud_transactions, doc, True)
         else:
              count_data(all_transactions, fraud_transactions, doc, False)
