@@ -62,7 +62,7 @@ def main():
 
     # MongoDB connection
     client = MongoClient(mongo_uri)
-    db = client.test
+    db = client.prod
     collection = db.logs
 
     # Process Kafka messages
