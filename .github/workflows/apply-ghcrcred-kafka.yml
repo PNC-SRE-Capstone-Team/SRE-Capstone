@@ -1,6 +1,18 @@
 name: apply-ghcrcred
 
-on: push
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events
+  push:
+    branches: ["main", "kafka"]
+    paths:
+      - kafkaSendLogs/**
+      - .github/workflows/apply-ghcrcred-kafka.yml
+  pull_request:
+    branches: ["main"]
+    paths:
+      - kafkaSendLogs/**
+      - .github/workflows/apply-ghcrcred-kafka.yml
 
 jobs:
   apply-ghcrcred-secret:
