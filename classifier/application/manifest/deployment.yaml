@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kafkasendlogs
+  name: frauddetection
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kafkasendlogs
+      app: frauddetection
   template:
     metadata:
       labels:
-        app: kafkasendlogs
+        app: frauddetection
     spec:
       containers:
-        - name: kafkasendlogs
-          image: ghcr.io/pnc-sre-capstone-team/kafkasendlogs:latest
+        - name: frauddetection
+          image: ghcr.io/pnc-sre-capstone-team/frauddetection:latest
           imagePullPolicy: Always
       imagePullSecrets:
         - name: ghcrcred
