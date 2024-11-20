@@ -2,12 +2,12 @@ externalAccess:
   enabled: true
   broker:
     service:
-      type: LoadBalancer
+      type: ClusterIP
       ports:
         external: 9094
   controller:
     service:
-      type: LoadBalancer
+      type: ClusterIP
       containerPorts:
         external: 9094
   autoDiscovery:
@@ -18,7 +18,7 @@ rbac:
   create: true
 controller:
   automountServiceAccountToken: true
-  replicaCount: 1
+  replicaCount: 3
 broker:
   automountServiceAccountToken: true
   pdb:
