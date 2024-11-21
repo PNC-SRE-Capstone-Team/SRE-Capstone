@@ -68,6 +68,22 @@ Transaction ID,Date,Day of Week,Time,Type of Card,Entry Mode,Amount,Type of Tran
 
 ### Apache Kafka
 
+- Open-source stream-processing platform
+
+  <!-- Designed for high-throughput, fault-tolerant, and real-time data streaming. -->
+
+- Core Concepts
+  - Producers, <!-- Applications that publish data to Kafka topics. -->
+    Consumers, <!-- Applications that read data from topics. -->
+    Topics, <!-- Categories or feed names to which messages are published. -->
+    Partitions, <!-- Sub-divisions of topics for parallel processing. -->
+    Brokers <!-- Servers that store and serve messages; form a Kafka cluster. -->
+
+- Use Cases
+  - Real-time analytics and monitoring
+  - Log aggregation and stream processing
+  - Event sourcing and data integration
+
 ---
 
 ### Fraud Classification
