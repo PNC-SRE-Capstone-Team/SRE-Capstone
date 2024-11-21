@@ -235,4 +235,8 @@ def build_query(summary):
 
 After the main function receives the query and data back, it inserts it into the designated tables, closes the database connections, and then sleeps for 5 minutes before the next summary will be made.
 
-##
+## Presentation Slides
+
+The slides are maintained in a Markdown file named `slides.md`. To serve this file as a presentation, run the following command:
+
+    docker run --rm -p 1948:1948 -v .:/slides webpronl/reveal-md:latest slides.md -w --theme <theme_name>

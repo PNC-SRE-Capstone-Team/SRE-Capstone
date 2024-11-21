@@ -1,13 +1,5 @@
 # SRE Capstone
 
-<!--
-Serve this Markdown file as a reveal.js presentation with:
-
-    reveal-md Presentation.md --theme <theme_name>
-
-(Slides are separated by `\n---\n`.)
--->
-
 Alex Griffin  
 Balin Warren  
 Chadon Mathurin  
