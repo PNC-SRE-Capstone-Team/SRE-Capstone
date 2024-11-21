@@ -90,7 +90,7 @@ A number of services are reachable by domain name. However, to safeguard the inf
 - `nginx-metrics.damdiel.com`
 
 ## Kubernetes
-The K3s project is used as the basic for the Kubernetes cluster. The control plane and nodes are provisioned with Terraform and then configured with Ansible.
+The K3s project is used as the basis for the Kubernetes cluster. The control plane and nodes are provisioned with Terraform and then configured with Ansible.
 
 ### Namespaces
 A number of namespaces are used to logically divide the Kubernetes cluster semantically:
