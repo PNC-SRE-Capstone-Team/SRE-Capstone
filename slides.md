@@ -97,7 +97,7 @@ Transaction ID,Date,Day of Week,Time,Type of Card,Entry Mode,Amount,Type of Tran
 
 Winning Model (Random Forest):
 
-![Model](.\classifier\training\modelThree\confusion_matrix.png)
+![Model](./assets/confusion_matrix.png)
 
 ---
 
