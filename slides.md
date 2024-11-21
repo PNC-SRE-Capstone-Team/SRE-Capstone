@@ -46,7 +46,7 @@ Daniel Nelson
 - Component services are defined as Dockerfiles and ArgoCD Applications
 - GitHub Action workflows deploy  Kubernetes objects defined in git repository
 - Build artifacts pushed to private container registry
-- Secrets managed as GitHub secrets to avoid unwanted exposure of sensitive data
+- Secrets managed by GitHub to avoid unwanted exposure of sensitive data
 
 ---
 
@@ -88,9 +88,44 @@ Transaction ID,Date,Day of Week,Time,Type of Card,Entry Mode,Amount,Type of Tran
 
 ### Fraud Classification
 
+Winning Model (Random Forest):
+
+![Model](.\classifier\training\modelThree\confusion_matrix.png)
+
 ---
 
-### MongoDB
+scikit-learn Classification Model
+
+```python
+    # Initialize the model. Class weight is being set due to 
+    # imbalance of fraud/not fraud cases
+    model = RandomForestClassifier(n_estimators=50, 
+      max_depth=10, random_state=42, 
+      class_weight={0: 1, 1: 8})
+    
+    # Split chunk into training and validation subsets
+    X_train_chunk, X_val_chunk, y_train_chunk, y_val_chunk = 
+    train_test_split(
+        X_chunk, y_chunk, test_size=0.2, random_state=42
+    )
+    
+    # Train the model incrementally
+    model.fit(X_train_chunk, y_train_chunk)  
+```
+
+---
+
+### MongoDB and MariaDB (MySQL)
+
+- MariaDB
+  - Open Source branch of MySQL
+  - Built to easily scale out
+  - Easily multithread for higher transaction throughput
+
+- MongoDB
+  -  Scalable (Shardable)
+  -  Quickly integrate with microservices
+  -  Flexible data structure
 
 ---
 
@@ -103,10 +138,6 @@ Transaction ID,Date,Day of Week,Time,Type of Card,Entry Mode,Amount,Type of Tran
 - Frequency of summaries can be easily adapted to account for volume.
 
   
----
-
-### MariaDB (MySQL)
-
 ---
 
 ### Monitoring and Dashboards
