@@ -1,4 +1,5 @@
-# SRE Capstone
+# Proactive Nonsense Crusher
+## Credit Card Fraud Detection
 
 Alex Griffin  
 Balin Warren  
