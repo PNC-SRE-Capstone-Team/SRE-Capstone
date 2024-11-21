@@ -37,6 +37,10 @@ Alex Griffin, Balin Warren, Chadon Mathurin, Daniel Nelson
 - Github
 
 ## Github Actions
+
+GitHub Actions is used as the CI/CD tool for all services. Build artifacts are pushed to a private [GitHub Container registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry), and secrets are managed as GitHub Actions secrets which are only accessible through GitHub Action workflows.
+
+### Hosting the GitHub Actions Runner
 The Github Actions runner is currently deployed on control-plane-1 of the Kubernetes cluster. This allows the runner to directly perform kubectl, argocd, and helm commands without needing to open public access to the cluster or provision a jumpbox and enable ssh. After it's deployed and authenticated with the script provided by Github, the persistent service is created with the following commands:
 
 ```console
@@ -91,8 +95,24 @@ A number of namespaces are used to logically divide the Kubernetes cluster seman
 - kube-system
 - monitoring
 
+## Kafka Transaction Log Microservice
+The kafkaSendLogs microservice is deployed within the `kafka` namespace within the Kubernetes cluster, as it interacts exclusively with the Apache Kafka database. It reads the transaction log and feeds it into Kafka as a queue for further processing.
+
+This is a small sample of the recorded information contained in the dataset:
+
+```csv
+Transaction ID,Date,Day of Week,Time,Type of Card,Entry Mode,Amount,Type of Transaction,Merchant Group,Country of Transaction,Shipping Address,Country of Residence,Gender,Age,Bank,Fraud
+#3577 209,14-Oct-20,Wednesday,19,Visa,Tap,£5,POS,Entertainment,United Kingdom,United Kingdom,United Kingdom,M,25.2,RBS,0
+
+```
+
+## Credit Card Fraud Transaction Dataset
+This dataset was used as the basis for the transaction logs and machine learning models:
+
+- https://www.kaggle.com/datasets/anurag629/credit-card-fraud-transaction-data/data
+
 ## Summary Script Microservice
-The summary script microservice is deployed within the database namespace within the kubernetes cluster. This made the most since as the purpose of the service was to ingest logs from MongoDB, interpret and summarize those logs, and then finally insert a summary into the mysql database every five minutes. Here are the main pieces of code that make the service work: 
+The summary script microservice is deployed within the `database` namespace within the Kubernetes cluster. This made the most sense as the purpose of the service was to ingest logs from MongoDB, interpret and summarize those logs, and then finally insert a summary into the MySQL database every five minutes. Here are the main pieces of code that make the service work: 
 
 #### Scheduler
 The scheduler is used to both find logs from the last 5 minutes as well as sleep the program between queries:
