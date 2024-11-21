@@ -215,60 +215,58 @@ scikit-learn Classification Model
 
 ### ArgoCD Dashboard Features
 
-1. Real-Time Deployment Monitoring:
+1. **Real-Time Deployment Monitoring:**
   - Displays deployment success/failure rates and pending operations.
-2. Detailed Health Status:
+2. **Detailed Health Status:**
   - Offers insights into application health (Healthy, Degraded, etc.).
-3. Cluster Connectivity:
+  
+---
+
+3. **Cluster Connectivity:**
   - Tracks ArgoCD’s connection to managed Kubernetes clusters.
-4. Custom Alerts:
+4. **Custom Alerts:**
   - Configurable thresholds for sync failures and resource utilization.
   
 ---
 
 #### Use Cases:
 
-- Deployment Health Monitoring: Quickly assess synchronization success and failure trends.
-- Operational Efficiency: Detect pending commands or stalled deployments.
-- Application Insights: Visualize individual application states for troubleshooting.
+- **Deployment Health Monitoring:** Quickly assess synchronization success and failure trends.
+- **Operational Efficiency:** Detect pending commands or stalled deployments.
+- **Application Insights:** Visualize individual application states for troubleshooting.
 
 ---
 
 ### ArgoCD Dashboard Panels Overview
 
-Panels Included:
+**Panels Included:**
 
-1. Applications Deployed:
-  - Type: Stat
-  - Purpose: Display the total number of managed applications.
+1. **Applications Deployed:**
+  - **Type:** Stat
+  - **Purpose:** Display the total number of managed applications.
 
-2. Sync Operations (Success/Failure Rate):
-  - Type: Gauge
-  - Purpose: Identify pipeline health and troubleshoot synchronization failures.
-
----
-
-### ArgoCD Dashboard Panels Overview
-
-1. Application Health Status:
-  - Type: Gauge
-  - Purpose: Breakdown of application states such as Healthy, Degraded, or Unknown.
-2. Cluster Connection Status:
-  - Type: Gauge
-  - Purpose:
-    - `1`: Connected.
-    - `0`: Disconnected.
+2. **Sync Operations (Success/Failure Rate):**
+  - **Type:** Gauge
+  - **Purpose:** Identify pipeline health and troubleshoot synchronization failures.
 
 ---
 
 ### ArgoCD Dashboard Panels Overview
 
-1. Pending kubectl Commands:
-  - Type: Timeseries
-  - Purpose: Highlight delayed operations for performance tuning.
-2. Applications Overview:
-  - Type: Bar Gauge
-  - Purpose:
+1. **Application Health Status:**
+  - **Type:** Gauge
+  - **Purpose:** Breakdown of application states such as Healthy, Degraded, or Unknown.
+
+---
+
+### ArgoCD Dashboard Panels Overview
+
+1. **Pending kubectl Commands:**
+  - **Type:** Timeseries
+  - **Purpose:** Highlight delayed operations for performance tuning.
+2. **Applications Overview:**
+  - **Type:** Bar Gauge
+  - **Purpose:**
     - Lists applications and their sync statuses (e.g., Synced, OutOfSync).
 
 ---
@@ -288,13 +286,13 @@ Panels Included:
 
 ### Workflow
 
-1. Initialization:
+1. **Initialization:**
   - Generate and save the initial 100 records in a CSV file.
   - Check if the file exists; if not, create it.
-2. Dynamic Updates:
+2. **Dynamic Updates:**
   - Append 10 new records every minute.
   - Simulate live data addition for real-time analysis.
-3. CSV File Handling:
+3. **CSV File Handling:**
   - Save data without overwriting the existing file.
   - Use headers for the first batch and omit headers for subsequent updates.
 
