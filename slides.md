@@ -151,6 +151,17 @@ scikit-learn Classification Model
 
 ---
 
+### Potential Next Steps
+
+- Detailed tracing of microservices with Jaeger
+- Oauth2 Integration with Ingress Nginx
+- Active-Active node/cluster failover
+- Dev environment with canary releases
+- Hardening checklist for each application
+- App of Apps deployment pattern
+
+---
+
 <!-- Repeat this slide at the end after going through each component. -->
 ![Architecture Diagram](./assets/architecture_diagram.png)
 
