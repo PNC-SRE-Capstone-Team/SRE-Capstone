@@ -77,6 +77,20 @@ The computing infrastructure used for this project is self-hosted, running on an
 ## Kubernetes
 The K3s project is used as the basic for the Kubernetes cluster. The control plane and nodes are provisioned with Terraform and then configured with Ansible.
 
+### Namespaces
+A number of namespaces are used to logically divide the Kubernetes cluster semantically:
+
+- argocd
+- cert-manager
+- database
+- default
+- ingress-nginx
+- kafka
+- kube-node-lease
+- kube-public
+- kube-system
+- monitoring
+
 ## Summary Script Microservice
 The summary script microservice is deployed within the database namespace within the kubernetes cluster. This made the most since as the purpose of the service was to ingest logs from MongoDB, interpret and summarize those logs, and then finally insert a summary into the mysql database every five minutes. Here are the main pieces of code that make the service work: 
 
