@@ -95,7 +95,14 @@ Transaction ID,Date,Day of Week,Time,Type of Card,Entry Mode,Amount,Type of Tran
 ---
 
 ### Summary Scripts
+- Purpose is to take the large amounts of transaction logs and compile into digestible summaries.
+- Ingests transaction logs from MongoDB.
+- Tabulates data of all transactions into summaries every 5 minutes.
+- Generates one summary for all transactions and another summary for just fraud transactions.
+- Summaries get inserted into MySQL tables
+- Frequency of summaries can be easily adapted to account for volume.
 
+  
 ---
 
 ### MariaDB (MySQL)
