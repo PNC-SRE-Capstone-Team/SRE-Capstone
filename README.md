@@ -91,7 +91,7 @@ sleep_time = (next_task - now).total_seconds()
 ```
 
 #### Summary Builder
-The summary builder is the function that ingests the mongo logs and tabulates the data into the 5 minute summaries. We decided on building summaries for 2 tables, one for all transaction summaries and another for only fraud transactions. Most fields were simply tablulated, for example we counted how many transactions came from each country, but for transaction amounts we found it would be more effective to average it.
+The summary builder is the function that ingests the Mongo logs and tabulates the data into the 5 minute summaries. We decided on building summaries for 2 tables, one for all transaction summaries and another for only fraud transactions. Most fields were simply tabulated, for example we counted how many transactions came from each country, but for transaction amounts we found it would be more effective to average it.
 
 The base summary builder python creates the dictionaries that will store our data and sends it to the counting function before converting the dictionaries to JSON and shipping it to the SQL query builder.
 ```python
@@ -113,7 +113,7 @@ def build_summaries(docs):
     return [all_transactions, fraud_transactions]
 ```
 
-The count data function is how we are interpreting the data coming from the mongo logs and adding it to the tally within the transaction dictionaries.
+The count data function is how we are interpreting the data coming from the Mongo logs and adding it to the tally within the transaction dictionaries.
 ```python
 def count_data(all_transactions_dict, fraud_transactions_dict, data_dict, is_fraud):
     categories = ["Type of Card", "Entry Mode", "Type of Transaction", "Merchant Group", "Country of Transaction", "Shipping Address", "Country of Residence", "Bank"]
@@ -141,7 +141,7 @@ def count_data(all_transactions_dict, fraud_transactions_dict, data_dict, is_fra
 After the data has been tabulated and the amounts have been averaged the script will convert the dictionaries to JSON and return the JSON to the main function to be used in the SQL queries.
 
 #### SQL Query Builder
-In order to automate the process of inserting the data into MySQL we had to create a function that would make the SQL queries with the data given. Since we have 2 summaries that don't share all the same fields the function simply runs a check to see what fields the JSON has and returns the corresponding SQL query as well as the data for that query packaged in a tuple for the MySql Cursor.
+In order to automate the process of inserting the data into MySQL we had to create a function that would make the SQL queries with the data given. Since we have 2 summaries that don't share all the same fields the function simply runs a check to see what fields the JSON has and returns the corresponding SQL query as well as the data for that query packaged in a tuple for the MySQL Cursor.
 
 ```python
 def build_query(summary):
@@ -178,6 +178,6 @@ def build_query(summary):
     return query, data
 ```
 
-After the main function receives the query and data back it inserts it into the designated tables, closes the database connections, and then sleeps for 5 minutes before the next summary will be made.
+After the main function receives the query and data back, it inserts it into the designated tables, closes the database connections, and then sleeps for 5 minutes before the next summary will be made.
 
 ##
