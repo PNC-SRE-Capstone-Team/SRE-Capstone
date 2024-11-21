@@ -106,6 +106,8 @@ Transaction ID,Date,Day of Week,Time,Type of Card,Entry Mode,Amount,Type of Tran
 
 ```
 
+The data is read into Python, converted into a dictionary object, serialized to JSON, and finally sent to Kafka.
+
 ## Credit Card Fraud Transaction Dataset
 This dataset was used as the basis for the transaction logs and machine learning models:
 
