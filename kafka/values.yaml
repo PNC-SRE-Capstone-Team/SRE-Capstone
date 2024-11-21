@@ -1,6 +1,7 @@
 externalAccess:
   enabled: true
   controller:
+    resourcesPreset: large
     service:
       type: NodePort
       containerPorts:
