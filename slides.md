@@ -50,6 +50,13 @@ Daniel Nelson
 
 ---
 
+### Ingress Nginx
+
+- Single point of entry into the cluster
+- Routes domains and paths to services
+- Cert-manager to provision, install, and rotate Cloudflare SSL certificates
+
+---
 ### Ingesting Credit Card Transactions
 
 - Credit card transaction dataset
