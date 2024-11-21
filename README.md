@@ -76,7 +76,18 @@ sudo systemctl status github-action-runner.service
 The download, extraction, and installation of the service can eventually be ported over to ansible, but this is non-critical.
 
 ## Computing Infrastructure
-The computing infrastructure used for this project is self-hosted, running on an HPE ProLiant DL380 Gen9 Server. It is running the Proxmox virtual machine platform, a free alternative to commercial platforms like VMWare ESXi. Virtual machines for the Kubernetes cluster are provisioned on top of Proxmox with Terraform. To safeguard the infrastructure from hostile actors on the internet, the machines are only accessible over the network to authenticated users with the Tailscale mesh VPN.
+The computing infrastructure used for this project is self-hosted, running on an HPE ProLiant DL380 Gen9 Server. It is running the Proxmox virtual machine platform, a free alternative to commercial platforms like VMWare ESXi. Virtual machines for the Kubernetes cluster are provisioned on top of Proxmox with Terraform.
+
+A number of services are reachable by domain name. However, to safeguard the infrastructure from hostile actors on the internet, the machines are only accessible over the network to authenticated users with the Tailscale mesh VPN.
+
+- `argo.damdiel.com`
+- `mariadb.damdiel.com`
+- `mongodb.damdiel.com`
+- `mongodb-metrics.damdiel.com`
+- `kafka.damdiel.com`
+- `grafana.damdiel.com`
+- `prometheus.damdiel.com`
+- `nginx-metrics.damdiel.com`
 
 ## Kubernetes
 The K3s project is used as the basic for the Kubernetes cluster. The control plane and nodes are provisioned with Terraform and then configured with Ansible.
@@ -112,6 +123,8 @@ The data is read into Python, converted into a dictionary object, serialized to 
 This dataset was used as the basis for the transaction logs and machine learning models:
 
 - https://www.kaggle.com/datasets/anurag629/credit-card-fraud-transaction-data/data
+
+## TODO Fraud Classifier Microservice
 
 ## Summary Script Microservice
 The summary script microservice is deployed within the `database` namespace within the Kubernetes cluster. This made the most sense as the purpose of the service was to ingest logs from MongoDB, interpret and summarize those logs, and then finally insert a summary into the MySQL database every five minutes. Here are the main pieces of code that make the service work: 
