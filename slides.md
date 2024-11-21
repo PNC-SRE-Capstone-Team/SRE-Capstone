@@ -253,7 +253,7 @@ scikit-learn Classification Model
 
 ### ArgoCD Dashboard Panels Overview
 
-1. **Application Health Status:**
+3. **Application Health Status:**
   - **Type:** Gauge
   - **Purpose:** Breakdown of application states such as Healthy, Degraded, or Unknown.
 
@@ -261,10 +261,10 @@ scikit-learn Classification Model
 
 ### ArgoCD Dashboard Panels Overview
 
-1. **Pending kubectl Commands:**
+4. **Pending kubectl Commands:**
   - **Type:** Timeseries
   - **Purpose:** Highlight delayed operations for performance tuning.
-2. **Applications Overview:**
+5. **Applications Overview:**
   - **Type:** Bar Gauge
   - **Purpose:**
     - Lists applications and their sync statuses (e.g., Synced, OutOfSync).
