@@ -42,8 +42,8 @@ Daniel Nelson
 
 ### CI/CD
 
-- K3s kubernetes cluster managed by ArgoCD
-- Component services are defined as Dockerfiles and Kubernetes manifests
+- K3s Kubernetes cluster managed by ArgoCD
+- Component services are defined as Dockerfiles and ArgoCD Applications
 - GitHub Action workflows deploy  Kubernetes objects defined in git repository
 - Build artifacts pushed to private container registry
 - Secrets managed as GitHub secrets to avoid unwanted exposure of sensitive data
