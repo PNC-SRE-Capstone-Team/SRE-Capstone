@@ -124,7 +124,20 @@ This dataset was used as the basis for the transaction logs and machine learning
 
 - https://www.kaggle.com/datasets/anurag629/credit-card-fraud-transaction-data/data
 
-## TODO Fraud Classifier Microservice
+## Fraud Classifier Microservice
+
+Trained using a random forest machine learning model, then deployed in a docker microservice and exposing metrics via a Prometheus webserver. Classification results of model are as follows:
+
+Classification Report:
+              
+                    precision    recall  f1-score   support
+
+                0       0.99      0.98      0.99     18610
+                1       0.79      0.85      0.82      1390
+
+    accuracy                                0.97     20000
+    macro avg           0.89      0.92      0.90     20000
+    weighted avg        0.98      0.97      0.97     20000
 
 ## Summary Script Microservice
 The summary script microservice is deployed within the `database` namespace within the Kubernetes cluster. This made the most sense as the purpose of the service was to ingest logs from MongoDB, interpret and summarize those logs, and then finally insert a summary into the MySQL database every five minutes. Here are the main pieces of code that make the service work: 
